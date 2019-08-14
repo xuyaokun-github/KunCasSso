@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.springframework.org/schema/webflow"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+	<!-- 使用自定义的Credential -->
+    <!-- <var name="credential" class="org.jasig.cas.authentication.UsernamePasswordCredential"/> -->
+    <var name="credential" class="com.sso.server.credential.BaseCredential"/>
+
+    <!--
+        <var name="credential" class="org.jasig.cas.authentication.RememberMeUsernamePasswordCredential" />
+    -->
+    <on-start>
+        <evaluate expression="initialFlowSetupAction"/>
+    </on-start>
+
+    <action-state id="ticketGrantingTicketCheck">
+        <evaluate expression="ticketGrantingTicketCheckAction"/>
+        <transition on="notExists" to="gatewayRequestCheck"/>
+        <transition on="invalid" to="terminateSession"/>
+        <transition on="valid" to="hasServiceCheck"/>
+    </action-state>
+
+    <action-state id="terminateSession">
+        <evaluate expression="terminateSessionAction.terminate(flowRequestContext)"/>
+        <transition to="gatewayRequestCheck"/>
+    </action-state>
+
+    <decision-state id="gatewayRequestCheck">
+        <if test="requestParameters.gateway != '' and requestParameters.gateway != null and flowScope.service != null"
+            then="gatewayServicesManagementCheck" else="serviceAuthorizationCheck"/>
+    </decision-state>
+
+    <decision-state id="hasServiceCheck">
+        <if test="flowScope.service != null" then="renewRequestCheck" else="viewGenericLoginSuccess"/>
+    </decision-state>
+
+    <decision-state id="renewRequestCheck">
+        <if test="requestParameters.renew != '' and requestParameters.renew != null" then="serviceAuthorizationCheck"
+            else="generateServiceTicket"/>
+    </decision-state>
+
+    <!-- Do a service authorization check early without the need to login first -->
+    <action-state id="serviceAuthorizationCheck">
+        <evaluate expression="serviceAuthorizationCheck"/>
+        <transition to="generateLoginTicket"/>
+    </action-state>
+
+    <!--
+        The "warn" action makes the determination of whether to redirect directly to the requested
+        service or display the "confirmation" page to go back to the server.
+    -->
+    <decision-state id="warn">
+        <if test="flowScope.warnCookieValue" then="showWarningView" else="redirect"/>
+    </decision-state>
+
+	<!-- 进入单点登录判断 -->
+    <action-state id="generateLoginTicket">
+        <evaluate expression="generateLoginTicketAction.generate(flowRequestContext)"/>
+        <transition to="chooseLoginType"/>
+        <!-- <transition on="generated" to="viewLoginForm"/> -->
+    </action-state>
+
+
+	<!-- 如果有single=1则进入直接登录
+	    这个是供非页面登陆使用的,例如直接调http接口来登录，通过web-flow里的参数判断决定走的是这个Handler
+	 -->
+    <decision-state id="chooseLoginType">
+        <!-- 这里判断假如request请求有携带single这个值，则认为是走非页面登录接口 -->
+    	<if test="requestParameters.single != null and requestParameters.single != ''" then="singleAction"  else="viewLoginForm"/>
+    </decision-state>
+
+	<!-- 从页面(请求)上取用户名及密码，然后绑到credentila上
+	    public Credential setData(String username, String password, String single,
+	        String randNum,String signData, String enCert,String handler) {
+	-->
+    <action-state id="singleAction">
+        <!-- 这里的kunTgc，就是所有非页面方式登录必传的票据 -->
+    	<evaluate expression="credential.setData(requestParameters.username, requestParameters.password,
+    	    requestParameters.single, requestParameters.randNum,requestParameters.signData,requestParameters.enCert
+    	    ,'SimpleUsernamePasswordAuthenticationHandler',requestParameters.kunTgc,requestParameters.nsrsbh,
+    	    requestParameters.qddm)" result="flowScope.credential"/>
+    	<transition to="realSubmit"/>
+    </action-state>
+
+    <!-- 这个视图对应的就是casLoginView.jsp 也就是登录的首页 -->
+    <view-state id="viewLoginForm" view="casLoginView" model="credential">
+        <binder>
+        	<!-- 绑定自定义登录凭证数据 -->
+            <binding property="authencationHandler"/>
+            <binding property="userName"/>
+            <binding property="passWord"/>
+            <!-- 一般来说，登录表单上传了多少个参数，在这里就绑定多少个参数，不同的参数可能有不同的业务含义 -->
+            <binding property="captchCode"/>
+            <binding property="randNum"/>
+            <binding property="signData"/>
+            <binding property="qddm"/>
+
+            <binding property="csessionid"/>
+            <binding property="sig"/>
+            <binding property="token"/>
+            <binding property="scene"/>
+            <!-- 是否记住密码
+                <binding property="rememberMe" />
+            -->
+        </binder>
+        <!-- 兼容性：commandName -> modelAttribute -->
+        <on-entry>
+            <set name="viewScope.commandName" value="'credential'"/>
+            <!--
+            <evaluate expression="samlMetadataUIParserAction" />
+            -->
+        </on-entry>
+        <transition on="submit" bind="true" validate="true" to="realSubmit"/>
+        <transition on="qrSubmit" to="sendTicketGrantingTicket"/>
+    </view-state>
+
+    <action-state id="realSubmit">
+        <evaluate
+                expression="authenticationViaFormAction.submit(flowRequestContext, flowScope.credential, messageContext)"/>
+        <transition on="warn" to="warn"/>
+        <!--
+        To enable AUP workflows, replace the 'success' transition with the following:
+        <transition on="success" to="acceptableUsagePolicyCheck" />
+        -->
+        <transition on="success" to="sendTicketGrantingTicket"/>
+        <transition on="successWithWarnings" to="showMessages"/>
+        <transition on="authenticationFailure" to="handleAuthenticationFailure"/>
+        <transition on="error" to="generateLoginTicket"/>
+    </action-state>
+
+    <view-state id="showMessages" view="casLoginMessageView">
+        <on-entry>
+            <evaluate expression="sendTicketGrantingTicketAction"/>
+            <set name="requestScope.messages" value="messageContext.allMessages"/>
+        </on-entry>
+        <transition on="proceed" to="serviceCheck"/>
+    </view-state>
+
+    <action-state id="handleAuthenticationFailure">
+        <evaluate expression="kunAuthenticationExceptionHandler.handle(currentEvent.attributes.error, messageContext)"/>
+        <transition on="AccountDisabledException" to="casAccountDisabledView"/>
+        <transition on="AccountLockedException" to="casAccountLockedView"/>
+        <transition on="AccountPasswordMustChangeException" to="casMustChangePassView"/>
+        <transition on="CredentialExpiredException" to="casExpiredPassView"/>
+        <transition on="InvalidLoginLocationException" to="casBadWorkstationView"/>
+        <transition on="InvalidLoginTimeException" to="casBadHoursView"/>
+        <transition on="FailedLoginException" to="generateLoginTicket"/>
+        <transition on="AccountNotFoundException" to="generateLoginTicket"/>
+        <transition on="KunLoginException" to="generateLoginTicket"/>
+        <transition on="KunSingleLoginException" to="appView"/>
+        <transition on="UNKNOWN" to="generateLoginTicket"/>
+    </action-state>
+
+    <action-state id="sendTicketGrantingTicket">
+        <evaluate expression="sendTicketGrantingTicketAction"/>
+        <!-- 登录成功后不跳转到service
+        <transition to="serviceCheck"/> -->
+        <transition to="appRedirectDecision"/>
+    </action-state>
+
+    <decision-state id="serviceCheck">
+        <if test="flowScope.service != null" then="generateServiceTicket" else="viewGenericLoginSuccess"/>
+    </decision-state>
+
+    <action-state id="generateServiceTicket">
+        <evaluate expression="generateServiceTicketAction"/>
+        <transition on="success" to="warn"/>
+        <transition on="authenticationFailure" to="handleAuthenticationFailure"/>
+        <transition on="error" to="generateLoginTicket"/>
+        <transition on="gateway" to="gatewayServicesManagementCheck"/>
+    </action-state>
+
+    <action-state id="gatewayServicesManagementCheck">
+        <evaluate expression="gatewayServicesManagementCheck"/>
+        <transition on="success" to="redirect"/>
+    </action-state>
+
+    <action-state id="redirect">
+        <evaluate expression="flowScope.service.getResponse(requestScope.serviceTicketId)"
+                  result-type="org.jasig.cas.authentication.principal.Response" result="requestScope.response"/>
+        <transition to="postRedirectDecision"/>
+    </action-state>
+
+	<!-- 非页面登录判断  -->
+    <decision-state id="appRedirectDecision">
+    	<if test="requestParameters.single != null and requestParameters.single != ''" then="appView" else="viewGenericLoginSuccess" />
+    </decision-state>
+
+	<!-- 返回JSON响应 -->
+    <end-state id="appView" view="appResponseView" >
+        <!-- view="externalRedirect:contextRelative:/singlePage.do"> -->
+		<on-entry>
+			<evaluate expression="appViewAction"/>
+		</on-entry>
+    </end-state>
+
+    <decision-state id="postRedirectDecision">
+        <if test="requestScope.response.responseType.name() == 'POST'" then="postView" else="redirectView"/>
+    </decision-state>
+
+    <!--
+        the "viewGenericLoginSuccess" is the end state for when a user attempts to login without coming directly from a service.
+        They have only initialized their single-sign on session.
+    -->
+
+    <end-state id="viewGenericLoginSuccess" view="casGenericSuccessView">
+        <on-entry>
+            <evaluate expression="genericSuccessViewAction.getAuthenticationPrincipal(flowScope.ticketGrantingTicketId)"
+                      result="requestScope.principal"
+                      result-type="org.jasig.cas.authentication.principal.Principal"/>
+        </on-entry>
+    </end-state>
+
+
+    <!--
+    The "showWarningView" end state is the end state for when the user has requested privacy settings (to be "warned")
+    to be turned on.  It delegates to a view defines in default_views.properties that display the
+    "Please click here to go to the service." message.
+    -->
+    <end-state id="showWarningView" view="casConfirmView"/>
+
+    <!-- Password policy failure states -->
+    <end-state id="abstactPasswordChangeView">
+        <on-entry>
+            <set name="flowScope.passwordPolicyUrl" value="passwordPolicy.passwordPolicyUrl"/>
+        </on-entry>
+    </end-state>
+    <end-state id="casExpiredPassView" view="casExpiredPassView" parent="#abstactPasswordChangeView"/>
+    <end-state id="casMustChangePassView" view="casMustChangePassView" parent="#abstactPasswordChangeView"/>
+    <end-state id="casAccountDisabledView" view="casAccountDisabledView"/>
+    <end-state id="casAccountLockedView" view="casAccountLockedView"/>
+    <end-state id="casBadHoursView" view="casBadHoursView"/>
+    <end-state id="casBadWorkstationView" view="casBadWorkstationView"/>
+
+    <end-state id="postView" view="postResponseView">
+        <on-entry>
+            <set name="requestScope.parameters" value="requestScope.response.attributes"/>
+            <set name="requestScope.originalUrl" value="flowScope.service.id"/>
+        </on-entry>
+    </end-state>
+
+    <!--
+        The "redirect" end state allows CAS to properly end the workflow while still redirecting
+        the user back to the service required.
+    -->
+    <end-state id="redirectView" view="externalRedirect:#{requestScope.response.url}"/>
+
+    <end-state id="viewServiceErrorView" view="serviceErrorView"/>
+
+    <decision-state id="serviceUnauthorizedCheck">
+        <if test="flowScope.unauthorizedRedirectUrl != null"
+            then="viewRedirectToUnauthorizedUrlView"
+            else="viewServiceErrorView"/>
+    </decision-state>
+
+    <end-state id="viewRedirectToUnauthorizedUrlView" view="externalRedirect:#{flowScope.unauthorizedRedirectUrl}"/>
+    <end-state id="viewServiceSsoErrorView" view="serviceErrorSsoView" />
+
+    <global-transitions>
+        <transition to="viewLoginForm" on-exception="org.jasig.cas.services.UnauthorizedSsoServiceException"/>
+        <transition to="viewServiceErrorView"
+                    on-exception="org.springframework.webflow.execution.repository.NoSuchFlowExecutionException"/>
+        <transition to="serviceUnauthorizedCheck" on-exception="org.jasig.cas.services.UnauthorizedServiceException"/>
+    </global-transitions>
+</flow>

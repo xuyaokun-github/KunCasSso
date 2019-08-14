@@ -1,0 +1,22 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+  http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+
+	<bean id="kunPrincipalResolver" class="com.sso.server.principal.KunPrincipalResolver"></bean>
+	<bean id="kunAuthenticationExceptionHandler" class="com.sso.server.exception.KunAuthenticationExceptionHandler"></bean>
+	<bean id="redisTicketRegistry" class="com.sso.server.registry.RedisTicketRegistry"></bean>
+
+	<bean id="usernamePasswordAuthencationHandler" class="com.sso.server.authencation.UsernamePasswordAuthencationHandler">
+		<property name="enable" value="true"/>
+		<property name="checkCaptchCode" value="true"/>
+	</bean>
+
+	<bean id="simpleUsernamePasswordAuthenticationHandler" class="com.sso.server.authencation.SimpleUsernamePasswordAuthenticationHandler">
+		<property name="enable" value="true"/>
+	</bean>
+</beans>

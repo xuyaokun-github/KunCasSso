@@ -1,0 +1,393 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>jQuery formValidator使用入门 - loyung - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=8F6jO9aWZhOryqKsIFGUkSbXpyPVKDwgWwvpie3eJis1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/Cogitation/bundle-Cogitation.css?v=KxzCsGje7vptXKdp2HZBpXmgRp_h-PvgHFxMy8F9r3o1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/loyung/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/loyung/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/loyung/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'loyung', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=ceHMEpeJXcR_f7TCJnXeZQRG1UsC0_cpwDJRs_oVInY1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+<!--PageBeginHtml Block Begin-->
+<div id="clustrmaps-widget"></div><noscript><a href="http://www2.clustrmaps.com/user/f3c10b83d"><img src="http://www2.clustrmaps.com/stats/maps-no_clusters/loyung-thumb.jpg" alt="Locations of visitors to this page" /></a></noscript>
+<!--PageBeginHtml Block End-->
+
+<div id="top">
+	
+<div>
+	<table>
+		<tr>
+			<td class="HeaderTitles">
+				<h1 class="HeaderTitle"><a id="Header1_HeaderTitle" class="HeaderMainTitle" href="http://www.cnblogs.com/loyung/">loyung</a></h1>
+				<p id="tagline"></p>
+			</td>
+		</tr>
+	</table>
+</div>
+<div class="HeaderBar">
+	<table id="HeaderBar" class="HeaderBar" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="HeaderBarTab" nowrap>
+&nbsp;
+<a id="Header1_MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</a> ::
+<a id="Header1_MyLinks1_MyHomeLink" href="http://www.cnblogs.com/loyung/">首页</a> ::
+<a href="http://q.cnblogs.com" class="menu">博问</a> ::
+<a href="http://home.cnblogs.com/ing/" class="menu">闪存</a> ::
+<a id="Header1_MyLinks1_NewPostLink" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a> ::
+<a id="Header1_MyLinks1_ContactLink" accesskey="9" rel="nofollow" href="http://msg.cnblogs.com/send/loyung">联系</a> ::
+<a id="Header1_MyLinks1_Syndication" href="http://www.cnblogs.com/loyung/rss">订阅</a>
+<a id="Header1_MyLinks1_XMLLink" class="XMLLink" href="http://www.cnblogs.com/loyung/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a> ::
+<a id="Header1_MyLinks1_Admin" rel="nofollow" href="http://i.cnblogs.com/">管理</a> ::
+
+</td>
+			<td><img id="Header1_BlueTab" src="/skins/Cogitation/Images/BlueTabRight.gif" align="absmiddle" /></td>
+			<td class="HeaderBarTabBack" nowrap width="100%">
+				
+<div class="BlogStatsBar">
+	<table class="BlogStatsBar">
+		<tr>
+			<td width="100%">
+			</td>
+			<td class="BlogStatsBar" nowrap>
+				&nbsp;
+				102 
+				随笔&nbsp;::
+				0 文章
+				::
+				1 评论
+				::
+				0 引用
+			</td>
+		</tr>
+	</table>
+</div>
+
+			</td>
+		</tr>
+	</table>
+</div>
+
+</div>
+<div id="leftmenu">	
+
+	    <div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+		
+<h3>公告</h3>
+<div class="News">
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+		<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+	
+</div>
+<div id="main">
+	
+<div id="post_detail">
+<div class="post">
+	<div class="postTitle">
+		<a id="cb_post_title_url" href="http://www.cnblogs.com/loyung/p/4689916.html">jQuery formValidator使用入门</a>
+	</div>
+	
+	<div class="postText">
+		<div id="cnblogs_post_body"><p><strong style="color: #555555; text-transform: none; line-height: 20px; text-indent: 0px; letter-spacing: normal; font-family: 'Microsoft YaHei', Arial, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; word-spacing: 0px; white-space: normal; background-color: #ffffff; -webkit-text-stroke-width: 0px;">使用插件必须加载的文件</strong></p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;">加载jQuery类库</span>
+&lt;script type="text/javascript" src="jquery-1.7.1.min.js"&gt;&lt;/script&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">加载插件</span>
+&lt;script type="text/javascript" src="formValidator-4.1.1.min.js"&gt;&lt;/script&gt;
+<span style="color: #008000;">//</span><span style="color: #008000;">加载扩展库(如果想用里面的函数、正则表达式，必须加载该文件)</span>
+&lt;script type="text/javascript" src="formValidatorRegex.js"&gt;&lt;/script&gt;</pre>
+</div>
+<p><strong style="color: #555555; text-transform: none; line-height: 20px; text-indent: 0px; letter-spacing: normal; font-family: 'Microsoft YaHei', Arial, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; word-spacing: 0px; white-space: normal; background-color: #ffffff; -webkit-text-stroke-width: 0px;"><strong style="color: #000000; text-transform: none; line-height: 20px; text-indent: 0px; letter-spacing: normal; font-family: 'Microsoft YaHei', Arial, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; word-spacing: 0px; white-space: nowrap; background-color: #f1f1f1; -webkit-text-stroke-width: 0px;">主要函数</strong></strong></p>
+<div class="cnblogs_code">
+<pre>inputValiator       <span style="color: #008000;">//</span><span style="color: #008000;">针对input、textarea、select控件的字符长度值范围、选择个数的控制</span>
+compareValidator    <span style="color: #008000;">//</span><span style="color: #008000;">提供2个对象的比较，目前可以比较字符串和数值型</span>
+regexValidator      <span style="color: #008000;">//</span><span style="color: #008000;">利用正则表达式验证</span>
+functionValidator   <span style="color: #008000;">//</span><span style="color: #008000;">利用外部函数来做校验</span>
+passwordValidator   <span style="color: #008000;">//</span><span style="color: #008000;">对密码强度进行校验</span>
+ajaxValidator       <span style="color: #008000;">//</span><span style="color: #008000;">通过ajax到服务器上做数据校验</span>
+formValidator       <span style="color: #008000;">//</span><span style="color: #008000;">对单个控件进行配置</span>
+defaultPassed       <span style="color: #008000;">//</span><span style="color: #008000;">默认校验通过，显示onCorrect状态</span>
+unFormValidator     <span style="color: #008000;">//</span><span style="color: #008000;">接触控件的验证功能</span>
+$.formValidator.initConfig      <span style="color: #008000;">//</span><span style="color: #008000;">对整个校验组进行全局配置</span>
+$.formValidator.pageIsValid     <span style="color: #008000;">//</span><span style="color: #008000;">对整个校验组进行校验，用来处理一个页面多个提交按钮的情况</span>
+$.formValidator.getLength       <span style="color: #008000;">//</span><span style="color: #008000;">返回控件的长度/选择个数/索引号</span>
+$.formValidator.reloadAutoTip   <span style="color: #008000;">//</span><span style="color: #008000;">重新定位提示层的位置</span>
+$.formValidator.retSetTipState  <span style="color: #008000;">//</span><span style="color: #008000;">来把该组的提示内容恢复到内容刚打开的状态</span>
+$.formValidator.serialize       <span style="color: #008000;">//</span><span style="color: #008000;">把指定的内容序列化，中文不会乱码</span></pre>
+</div>
+<p><span style="color: #406040; text-transform: none; line-height: 20px; text-indent: 0px; letter-spacing: normal; font-family: 'Microsoft YaHei', Arial, sans-serif; font-size: 13px; font-variant: normal; font-weight: normal; word-spacing: 0px; float: none; display: inline !important; white-space: nowrap; font-size-adjust: none; font-stretch: normal; background-color: #f1f1f1; -webkit-text-stroke-width: 0px;">使用流程<br style="font: italic 13px/20px 'Microsoft YaHei', Arial, sans-serif; color: #406040; text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: nowrap; font-size-adjust: none; font-stretch: normal; background-color: #f1f1f1; -webkit-text-stroke-width: 0px;" /><span style="color: #406040; text-transform: none; line-height: 20px; text-indent: 0px; letter-spacing: normal; font-family: 'Microsoft YaHei', Arial, sans-serif; font-size: 13px; font-variant: normal; font-weight: normal; word-spacing: 0px; float: none; display: inline !important; white-space: nowrap; font-size-adjust: none; font-stretch: normal; background-color: #f1f1f1; -webkit-text-stroke-width: 0px;">1. 编写全局配置函数：</span></span></p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>&lt;script type="text/javascript"&gt;<span style="color: #000000;">
+$.formValidator.initConfig({
+    validatorGroup:</span>"1", <span style="color: #008000;">//</span><span style="color: #008000;">校验组组号，默认"1"。formvalidator函数里的validatorGroup值如果和这里的值一样，就认为是同一组的控件.</span>
+    formId:"myform", <span style="color: #008000;">//</span><span style="color: #008000;">表单FORM的ID，插件自动在表单的submit事件里注册函数pageIsValid</span>
+    mode:"FixTip", <span style="color: #008000;">//</span><span style="color: #008000;">显示模式。固定提示层(FixTip)|自动构建提示层(AutoTip)|单个提示层跟随(SingleTip)|弹出提示内容(AlertTip)</span>
+    errorFocus:<span style="color: #0000ff;">true</span>, <span style="color: #008000;">//</span><span style="color: #008000;">整个校验组校验失败时，第一个出错的控件是否获得焦点,默认true </span>
+    forceValid:<span style="color: #0000ff;">true</span>, <span style="color: #008000;">//</span><span style="color: #008000;">强制验证，同组的控件都采用：直到输入正确为止才允许离开焦点,默认true</span>
+    wideWord:<span style="color: #0000ff;">true</span>, <span style="color: #008000;">//</span><span style="color: #008000;">宽字节，默认true。是否把一个全角字符当做2个长度 </span>
+    onSuccess:<span style="color: #0000ff;">function</span>(){}, <span style="color: #008000;">//</span><span style="color: #008000;">该校验组通过后的回调函数，返回false，组织表单的提交 </span>
+    ajaxForm:Json, <span style="color: #008000;">//</span><span style="color: #008000;">把整个表单的数据通过ajax提交给服务器。</span>
+    submitOnce:<span style="color: #0000ff;">false</span>, <span style="color: #008000;">//</span><span style="color: #008000;">校验通过后，是否灰掉所有的提交按钮,默认false</span>
+    AjaxPrompt:String, <span style="color: #008000;">//</span><span style="color: #008000;">提交之前，如果存在ajax校验，且有未返回的，则在触发整组校验的时候会弹出此提示内容。默认值：&ldquo;当前有数据正在进行服务器端校验，请稍候&rdquo;，如果为空则不提示</span>
+    onError:<span style="color: #0000ff;">function</span>(msg,obj,errorlist){}, <span style="color: #008000;">//</span><span style="color: #008000;">该组校验失败后的回调函数 有三个参数 参数1： 一个校验没有通过的错误信息,参数2： 一个校验没有通过的元素对象,参数3： 所有的错误信息数组，你可以通过$.map来遍历 </span>
+    debug:<span style="color: #0000ff;">false</span> <span style="color: #008000;">//</span><span style="color: #008000;">调试模式，如果你设为调试模式，在校验成功后会有一个提示窗口：现在正处于调试模式(debug:true)，不能提交， 默认false </span>
+<span style="color: #000000;">});
+</span>&lt;/script&gt;</pre>
+</div>
+<p><span style="color: #406040; text-transform: none; line-height: 20px; text-indent: 0px; letter-spacing: normal; font-family: 'Microsoft YaHei', Arial, sans-serif; font-size: 13px; font-variant: normal; font-weight: normal; word-spacing: 0px; float: none; display: inline !important; white-space: nowrap; font-size-adjust: none; font-stretch: normal; background-color: #f1f1f1; -webkit-text-stroke-width: 0px;"><span style="color: #406040; text-transform: none; line-height: 20px; text-indent: 0px; letter-spacing: normal; font-family: 'Microsoft YaHei', Arial, sans-serif; font-size: 13px; font-variant: normal; font-weight: normal; word-spacing: 0px; float: none; display: inline !important; white-space: nowrap; font-size-adjust: none; font-stretch: normal; background-color: #f1f1f1; -webkit-text-stroke-width: 0px;"><span style="font: 13px/20px 'Microsoft YaHei', Arial, sans-serif; color: #000000; text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; float: none; display: inline !important; white-space: nowrap; font-size-adjust: none; font-stretch: normal; background-color: #f1f1f1; -webkit-text-stroke-width: 0px;">2. 编写单个控件配置函数</span></span></span></p>
+<div class="cnblogs_code">
+<pre>&lt;script type="text/javascript"&gt;<span style="color: #000000;">
+$(</span>"#username"<span style="color: #000000;">).formValidator({
+    validatorGroup:String, </span><span style="color: #008000;">//</span><span style="color: #008000;">校验组</span>
+    empty:<span style="color: #0000ff;">false</span>, <span style="color: #008000;">//</span><span style="color: #008000;">控件是否可以为空，默认false。如果是input-text控件，表示内容是否可以为空，如果是checkbox、radio、select控件表示是否可以不选择项</span>
+    onShowText:String, <span style="color: #008000;">//</span><span style="color: #008000;">显示在输入框里的提示，默认:""。</span>
+    onShowTextColor:Json, <span style="color: #008000;">//</span><span style="color: #008000;">输入框里提示的颜色,默认： {mouseOnColor:"#999999",mouseOutColor:"#000000"}。</span>
+    autoModify:Boolean, <span style="color: #008000;">//</span><span style="color: #008000;">自动修复错误,默认true。离开焦点，校验不通过，是否自动修复错误</span>
+    onEmpty:String, <span style="color: #008000;">//</span><span style="color: #008000;">空时候的提示，默认："输入内容为空"。当内容为空的时候提示，为空则不显示提示内容。</span>
+    onShow:String, <span style="color: #008000;">//</span><span style="color: #008000;">显示的时候提示，默认："请输入内容"。页面刚打开时候的提示消息，为空则不显示。</span>
+    onFocus:String, <span style="color: #008000;">//</span><span style="color: #008000;">获取焦点的提示，默认："请输入内容"。控件获取焦点时候的提示，为空则不显示。</span>
+    onCorrect:String, <span style="color: #008000;">//</span><span style="color: #008000;">正确后的提示，默认："输入正确"。当焦点离开控件的时候，如果输入正确将出现该提示，为空不显示。</span>
+    tipID:String, <span style="color: #008000;">//</span><span style="color: #008000;">提示层ID。默认用表单ID+"Tip",也可以显式的指明ID值。</span>
+    tipCss:Json, <span style="color: #008000;">//</span><span style="color: #008000;">自动构建的提示层样式，主要用于定位自动构建的提示层。有特定要求，详细看文档</span>
+    relativeID:String, <span style="color: #008000;">//</span><span style="color: #008000;">相对控件的ID，默认：当前校验控件的ID，采用自动构建提示层的时候，提示层相对的目标控件ID，tipCss属性就是相对于这个参数而言的</span>
+    pwdTipId:String, <span style="color: #008000;">//</span><span style="color: #008000;">默认：控件ID+Tip。用于显示密码强度校验提示的容器ID，默认跟tipID参数默认值相同，即显示在同个DIV里</span>
+    fixTipID:String, <span style="color: #008000;">//</span><span style="color: #008000;">默认：null。表示固定提示消息要放置的容器ID值。</span>
+    forceValid:Boolean, <span style="color: #008000;">//</span><span style="color: #008000;">是否强制输入,默认：true。是否一致到到输入正确为止才允许离开焦点</span>
+    ajax:Boolean, <span style="color: #008000;">//</span><span style="color: #008000;">提交服务器，默认true。某个控件有ajaxValidator函数校验的时候，该参数决定哪些控件的值一起提交给服务器。</span>
+    defaultValue:Object|String, <span style="color: #008000;">//</span><span style="color: #008000;">为input、select、textarea控件设置默认值</span>
+    triggerEvent:String, <span style="color: #008000;">//</span><span style="color: #008000;">触发校验的事件，默认blur。当前支持blur和change两种。</span>
+    leftTrim:Boolean, <span style="color: #008000;">//</span><span style="color: #008000;">去掉左边空格，默认false。是否先去掉左边空格再校验.</span>
+    rightTrim:Boolean, <span style="color: #008000;">//</span><span style="color: #008000;">去掉右边空格，默认false。是否先去掉右边空格再校验.   </span>
+<span style="color: #000000;">});
+</span>&lt;/script&gt;</pre>
+</div>
+<p><span style="font: 13px/20px 'Microsoft YaHei', Arial, sans-serif; color: #2060a0; text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; float: none; display: inline !important; white-space: nowrap; font-size-adjust: none; font-stretch: normal; background-color: #f1f1f1; -webkit-text-stroke-width: 0px;">3. 对单个控件编写 验证函数</span></p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>&lt;script type="text/javascript"&gt;<span style="color: #000000;">
+$("#xx"<span style="color: #000000;">).formValidator({}).inputValidator({
+    type:Object, <span style="color: #008000;">//<span style="color: #008000;">比较类型，默认size。有以下几个类型：size:表示字符长度选择的个数；number:数值型比较；string：字符型比较；date：短日期比较；datetime：长日期比较
+    min:Object, <span style="color: #008000;">//<span style="color: #008000;">最小长度/值。对checkbox/radio而言表示选中控件的个数，对text、password、textarea而言表示输入字符的长度或值得大小
+    max:Object, <span style="color: #008000;">//<span style="color: #008000;">最大长度/值.
+    onError:String, <span style="color: #008000;">//<span style="color: #008000;">发生错误时显示，默认：输入错误。为空则不显示 
+    onErrorMin:String, <span style="color: #008000;">//<span style="color: #008000;">比min属性小的提示。
+    onErrorMax:String, <span style="color: #008000;">//<span style="color: #008000;">比max属性大的提示。
+    empty:Json, <span style="color: #008000;">//<span style="color: #008000;">是否允许两边为空，默认允许。默认值：{leftEmpty:true,rightEmpty:true,emptyError:null}
+<span style="color: #000000;">});
+$("#xx"<span style="color: #000000;">).formValidator({}).compareValidator({
+    desID:String, <span style="color: #008000;">//<span style="color: #008000;">要比较控件的ID。要跟源目标进行比较的目标ID
+    operateor:String, <span style="color: #008000;">//<span style="color: #008000;">比较符号，一共有如下几种：=、!=、&gt;、&gt;=、&lt;、&lt;=
+    dataType:String, <span style="color: #008000;">//<span style="color: #008000;">数据类型。目前只支持4种："string","number","datetime","date"
+    onError:String, <span style="color: #008000;">//<span style="color: #008000;">发生错误的提示。
+<span style="color: #000000;">});
+$("#xx"<span style="color: #000000;">).formValidator({}).regexValidator({
+    regExp:Object, <span style="color: #008000;">//<span style="color: #008000;">正则表达式或表达式数组。参数类型分为两类：1.字符型。2.字符数组型。都用来表示正则表达式或枚举类型。
+    <span style="color: #008000;">//<span style="color: #008000;">采用的是显式构造函数new RegExp("pattern"[,"flags"]); 由于Javascript 中'\' 被用作转义字符，所以在使用显示构造函数构造实例对象的时候，需要使用'\' 代替'\'
+    param:String, <span style="color: #008000;">//<span style="color: #008000;">附加参数，默认:"i"。值有几下几种类型：g、i、m g：代表可以进行全局匹配。i：代表不区分大小写匹配。m：代表可以进行多行匹配。
+    compareType:String, <span style="color: #008000;">//<span style="color: #008000;">比较类型,默认："||"。值有以下几种：||：或的关系;&amp;&amp;：并列的关系; 当regExp为数组的时候，当前这个参数就表示，数组里的正则表达式的相互关系。
+    dataType:String, <span style="color: #008000;">//<span style="color: #008000;">默认:"string",数据类型.值有以下几种：string:自己写表达式；enum：枚举名。
+    <span style="color: #008000;">//<span style="color: #008000;"> 一般情况下，枚举名在formValidatorReg.js里设置，该脚本里已经默认带了几个常用正则表达式。你可以自己修改、添加formValidatorRegex.js里的枚举项目名和表达式。
+    onError:String, <span style="color: #008000;">//<span style="color: #008000;">发生错误的提示。
+<span style="color: #000000;">});
+$("#xx"<span style="color: #000000;">).formValidator({}).functionValidator({
+    fun:Function, <span style="color: #008000;">//<span style="color: #008000;">属性名:外部函数名。    调用外部函数进行校验，提供2个参数：
+    <span style="color: #008000;">//<span style="color: #008000;">参数1:元素的值,
+    <span style="color: #008000;">//<span style="color: #008000;">参数2:元素对象。
+    <span style="color: #008000;">//<span style="color: #008000;">返回值，有以下几种类型：
+    <span style="color: #008000;">//<span style="color: #008000;">true: 校验成功
+    <span style="color: #008000;">//<span style="color: #008000;">false: 校验失败 
+    <span style="color: #008000;">//<span style="color: #008000;">字符串:校验失败，返回值当作自定义错误信息，将显示在提示层上
+    <span style="color: #008000;">//<span style="color: #008000;">无: 仅当一个处理过程。
+    <span style="color: #008000;">//<span style="color: #008000;">可以写匿名函数
+    onError:String, <span style="color: #008000;">//<span style="color: #008000;">发生错误时显示
+<span style="color: #000000;">});
+$("#xx"<span style="color: #000000;">).formValidator({}).passwordValidator({
+    compareID:String <span style="color: #008000;">//<span style="color: #008000;">比较控件ID。例如，密码不能于用户名相同，则该参数为用户名的ID，错误提示用参数onErrorCompareSame
+    onErrorCompareSame:String <span style="color: #008000;">//<span style="color: #008000;">值相同的错误提示。本参数要在compareID不为空的情况下才会起作用。如果想去掉该校验规则，本参数设置为空即可
+    onErrorContinueChar:String <span style="color: #008000;">//<span style="color: #008000;">连续字符的错误提示。    默认不允许把连续字符当做密码。例如&ldquo;123456&rdquo;是非法密码。如果想去掉该校验规则，本参数设置为空即可
+    onErrorSameChar:String <span style="color: #008000;">//<span style="color: #008000;">字符相同的错误提示。    默认不允许把相同字符当做密码。例如&ldquo;111111&rdquo;是非法密码。如果想去掉该校验规则，本参数设置为空即可
+<span style="color: #000000;">});
+$("#xx"<span style="color: #000000;">).formValidator({}).ajaxValidator({
+    type:String, <span style="color: #008000;">//<span style="color: #008000;">请求的类型，默认"GET"。
+    url:String, <span style="color: #008000;">//<span style="color: #008000;">发送到的URL地址，默认当前页地址。在服务器端，你可以通过name为clientid获取触发验证的控件ID名
+    dataType:String, <span style="color: #008000;">//<span style="color: #008000;">返回的数据类型，默认:"html"。包含以下几种类型：xml、html、script、json、text
+    timeout:Number, <span style="color: #008000;">//<span style="color: #008000;">超时设置，默认999。
+    data:Object,String, <span style="color: #008000;">//<span style="color: #008000;">数据
+    async:Boolean, <span style="color: #008000;">//<span style="color: #008000;">是否异步发送，默认true。
+    success:Function, <span style="color: #008000;">//<span style="color: #008000;">成功时的回调函数。
+    processData:Object|String， <span style="color: #008000;">//<span style="color: #008000;">是否转换为对象，默认true。
+    complete:Function, <span style="color: #008000;">//<span style="color: #008000;">完成时的调用函数。ajax请求结束的回调函数
+    beforeSend:Function, <span style="color: #008000;">//<span style="color: #008000;">请求前调用的函数。
+    buttons:String, <span style="color: #008000;">//<span style="color: #008000;">你点提交的按钮(组)对象。 当你触发了ajax校验，在发送之前，buttons里对应的按钮（组）就会灰掉，一直等待服务器返回数据为止，就重新亮起来
+    error:Function, <span style="color: #008000;">//<span style="color: #008000;">失败时的回调函数。
+    onWait:String, <span style="color: #008000;">//<span style="color: #008000;">正在校验的提示，默认："正在等待服务器返回数据"。已经发送，但是服务器还未返回数据时候的提示消息。
+    onError:Object|String, <span style="color: #008000;">//<span style="color: #008000;">校验没有通过的提示，默认："服务器校验没有通过".该参数的类型有2种
+    <span style="color: #008000;">//<span style="color: #008000;">1、字符串。发生错误时候的提示消息。2、函数。有两个参数，参数1：当前值 参数2：当前控件对象(dom)
+<span style="color: #000000;">});
+&lt;/script&gt;</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></pre>
+</div>
+<p><span style="font: 13px/20px 'Microsoft YaHei', Arial, sans-serif; color: #2060a0; text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; float: none; display: inline !important; white-space: nowrap; font-size-adjust: none; font-stretch: normal; background-color: #f1f1f1; -webkit-text-stroke-width: 0px;"><span style="font: 13px/18.18px Monaco, 'Lucida Console', monospace; color: #000000; text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; float: none; display: inline !important; white-space: nowrap; font-size-adjust: none; font-stretch: normal; background-color: #f1f1f1; -webkit-text-stroke-width: 0px;">举例</span>：</span></p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">form </span><span style="color: #ff0000;">name</span><span style="color: #0000ff;">="newregform"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="newregform"</span><span style="color: #ff0000;"> method</span><span style="color: #0000ff;">="post"</span><span style="color: #ff0000;"> action</span><span style="color: #0000ff;">="/reg.me?act=doreg"</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">name</span><span style="color: #0000ff;">="uname"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="uname"</span><span style="color: #ff0000;"> type</span><span style="color: #0000ff;">="text"</span> <span style="color: #0000ff;">/&gt;</span>  
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">span </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="onError"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="unameTip"</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">span</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="biaospan3"</span><span style="color: #0000ff;">&gt;</span>密码:<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>  
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="biaospan2"</span><span style="color: #0000ff;">&gt;&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">name</span><span style="color: #0000ff;">="pwd1"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="pwd1"</span><span style="color: #ff0000;"> type</span><span style="color: #0000ff;">="password"</span><span style="color: #0000ff;">/&gt;&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>  
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="lright"</span><span style="color: #0000ff;">&gt;&lt;</span><span style="color: #800000;">span </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="onError"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="pwd1Tip"</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">span</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>  
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>  
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="biaospan3"</span><span style="color: #0000ff;">&gt;</span>确认密码:<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>  
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="biaospan2"</span><span style="color: #0000ff;">&gt;&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">name</span><span style="color: #0000ff;">="pwd2"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="pwd2"</span><span style="color: #ff0000;"> type</span><span style="color: #0000ff;">="password"</span><span style="color: #0000ff;">/&gt;&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>  
+    <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="lright"</span><span style="color: #0000ff;">&gt;&lt;</span><span style="color: #800000;">span </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="onError"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="pwd2Tip"</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">span</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>  
+    <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>  
+   
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="biaospan3"</span><span style="color: #0000ff;">&gt;</span>电子邮箱:<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="biaospan2"</span><span style="color: #0000ff;">&gt;&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">name</span><span style="color: #0000ff;">="email"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="email"</span><span style="color: #ff0000;"> type</span><span style="color: #0000ff;">="text"</span><span style="color: #ff0000;"> size</span><span style="color: #0000ff;">="30"</span><span style="color: #0000ff;">/&gt;&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="lright"</span><span style="color: #0000ff;">&gt;&lt;</span><span style="color: #800000;">span </span><span style="color: #ff0000;">class</span><span style="color: #0000ff;">="onError"</span><span style="color: #ff0000;"> id</span><span style="color: #0000ff;">="emailTip"</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">span</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">li</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">form</span><span style="color: #0000ff;">&gt;</span><span style="color: #000000;">  
+   
+//下面是js代码  
+</span><span style="color: #0000ff;">&lt;</span><span style="color: #800000;">script </span><span style="color: #ff0000;">type</span><span style="color: #0000ff;">="text/javascript"</span><span style="color: #0000ff;">&gt;</span><span style="background-color: #f5f5f5; color: #000000;">  
+$(document).ready(</span><span style="background-color: #f5f5f5; color: #0000ff;">function</span><span style="background-color: #f5f5f5; color: #000000;">(){  
+$.formValidator.initConfig({validatorGroup:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">1</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,formId:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">newregform</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,onError:</span><span style="background-color: #f5f5f5; color: #0000ff;">function</span><span style="background-color: #f5f5f5; color: #000000;">(msg){alert(msg)}});  
+    $(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">#uname</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">).formValidator({onShow:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">请输入昵称</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,onFocus:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">最多20个字符</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,onCorrect:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">输入正确</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">}).inputValidator({min:</span><span style="background-color: #f5f5f5; color: #000000;">1</span><span style="background-color: #f5f5f5; color: #000000;">,max:</span><span style="background-color: #f5f5f5; color: #000000;">20</span><span style="background-color: #f5f5f5; color: #000000;">,empty:{leftEmpty:</span><span style="background-color: #f5f5f5; color: #0000ff;">false</span><span style="background-color: #f5f5f5; color: #000000;">,rightEmpty:</span><span style="background-color: #f5f5f5; color: #0000ff;">false</span><span style="background-color: #f5f5f5; color: #000000;">,emptyError:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">昵称两边不能有空格</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">},onError:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">昵称不能为空</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">}).ajaxValidator({  
+        type : </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">post</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        cache : </span><span style="background-color: #f5f5f5; color: #0000ff;">false</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        url : </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">../UserControl/Ajax.aspx</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        datatype : </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">json</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        addidvalue : </span><span style="background-color: #f5f5f5; color: #0000ff;">true</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        data : { </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">func</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">: </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">CheckUserName</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">username</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">: </span><span style="background-color: #f5f5f5; color: #0000ff;">function</span><span style="background-color: #f5f5f5; color: #000000;"> () { </span><span style="background-color: #f5f5f5; color: #0000ff;">return</span><span style="background-color: #f5f5f5; color: #000000;"> $(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">#UserName</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">).val()} },  
+        success : </span><span style="background-color: #f5f5f5; color: #0000ff;">function</span><span style="background-color: #f5f5f5; color: #000000;">(data){  
+            </span><span style="background-color: #f5f5f5; color: #0000ff;">if</span><span style="background-color: #f5f5f5; color: #000000;">(data </span><span style="background-color: #f5f5f5; color: #000000;">==</span> <span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">success</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;"> ){  
+                </span><span style="background-color: #f5f5f5; color: #0000ff;">return</span> <span style="background-color: #f5f5f5; color: #0000ff;">true</span><span style="background-color: #f5f5f5; color: #000000;">;              
+            }</span><span style="background-color: #f5f5f5; color: #0000ff;">else</span><span style="background-color: #f5f5f5; color: #000000;">{  
+                </span><span style="background-color: #f5f5f5; color: #0000ff;">return</span> <span style="background-color: #f5f5f5; color: #0000ff;">false</span><span style="background-color: #f5f5f5; color: #000000;">;                 
+            }  
+        },  
+        buttons: $(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">#regbtn</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">),  
+        error: </span><span style="background-color: #f5f5f5; color: #0000ff;">function</span><span style="background-color: #f5f5f5; color: #000000;">(){alert(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">服务器忙，请重试</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">);},  
+        onerror : </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">您注册的昵称已存在</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        onwait : </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">正在对昵称进行校验...</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">  
+   
+    });  
+   //dataType: "enum"
+    $(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">#email</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">).formValidator({onShow:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">请输入邮箱</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,onFocus:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">最多80个字符</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,onCorrect:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">输入正确</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">}).inputValidator({min:</span><span style="background-color: #f5f5f5; color: #000000;">1</span><span style="background-color: #f5f5f5; color: #000000;">,max:</span><span style="background-color: #f5f5f5; color: #000000;">80</span><span style="background-color: #f5f5f5; color: #000000;">,empty:{leftEmpty:</span><span style="background-color: #f5f5f5; color: #0000ff;">false</span><span style="background-color: #f5f5f5; color: #000000;">,rightEmpty:</span><span style="background-color: #f5f5f5; color: #0000ff;">false</span><span style="background-color: #f5f5f5; color: #000000;">,emptyError:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">邮箱两边不能有空格</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">},onError:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">邮箱不能为空</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">}).regexValidator({regExp:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">^([\\w-.]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([\\w-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?){1}quot;,onError:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">邮箱格式不正确</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">}).ajaxValidator({  
+        type : </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">post</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        cache : false,  
+        addidvalue : true,  
+        url : </span><span style="background-color: #f5f5f5; color: #000000;">"/</span><span style="background-color: #f5f5f5; color: #000000;">servlet</span><span style="background-color: #f5f5f5; color: #000000;">/</span><span style="background-color: #f5f5f5; color: #000000;">newspace</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        datatype : </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">html</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        data : </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">act</span><span style="background-color: #f5f5f5; color: #000000;">=</span><span style="background-color: #f5f5f5; color: #000000;">new_vemail</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        success : function(data){  
+            if(data == </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">success</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;"> ){  
+                return true;  
+            }else{  
+                return false;  
+            }  
+        },  
+        buttons: $(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">#regbtn</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">),  
+        error: function(){alert(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">服务器忙，请重试</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">);},  
+        onerror : </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">您注册的邮箱已存在</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,  
+        onwait : </span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">正在对邮箱进行校验...</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">  
+    });  
+$(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">#pwd2</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">).formValidator({onshow:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">确认密码不能为空</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,onfocus:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">最多20个字符</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,oncorrect:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">输入正确</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">}).inputValidator({min:1,max:20,empty:{leftempty:false,rightempty:false,emptyerror:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">确认密码两边不能有空格</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">},onerror:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">确认密码不能为空</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">}).compareValidator({desid:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">pwd1</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,operateor:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">=</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,datatype:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">string</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,onerror:</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">确证密码不一致</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">});  
+});  
+&lt;/script&gt;</span></pre>
+</div>
+<p>&nbsp;另外如果试用AJAX提交数据验证，可以试用下面方法完美解决不通过验证就提交的问题。</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span><span style="color: #000000;"> SubmitInfo() {
+            </span><span style="color: #0000ff;">if</span> ($.formValidator.pageIsValid('1') == <span style="color: #0000ff;">true</span><span style="color: #000000;">) {//先判断验证是否通过
+                $.post(
+                 </span>"Ajax.aspx"<span style="color: #000000;">,
+                { func: </span>"UserRegist", username: $("#UserName").val(), pwd: $("#Pwd2"<span style="color: #000000;">).val() },
+                </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> (data) {
+                    </span><span style="color: #0000ff;">if</span> (data = "false"<span style="color: #000000;">) {
+                        art.dialog({ title: </span>'提示', content: '用户注册失败，请重新尝试或联系管理员！', icon: 'error'<span style="color: #000000;"> });
+                    }
+                }
+            );
+            }           
+        }</span></pre>
+</div>
+<p>&nbsp;</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+	</div>
+	
+	<div class="postfoot">
+		posted on <span id="post-date">2015-07-30 17:04</span> <a href='http://www.cnblogs.com/loyung/'>loyung</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=4689916" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(4689916);return false;">收藏</a>
+	</div>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=147437,cb_entryId=4689916,cb_blogApp=currentBlogApp,cb_blogUserGuid='de41bc64-1949-e211-aa8f-842b2b196315',cb_entryCreatedDate='2015/7/30 17:04:00';loadViewCount(cb_entryId);</script>
+
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='ad_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='ad_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+</div>
+<div class="footer">
+
+<p id="footer">
+	Powered by: 
+	<br />
+	
+	<a id="Footer1_Hyperlink3" NAME="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br />
+	Copyright &copy; loyung
+</p>
+</div>
+<!--PageEndHtml Block Begin-->
+<div id="clustrmaps-widget"></div><noscript><a href="http://www2.clustrmaps.com/user/f3c10b83d"><img src="http://www2.clustrmaps.com/stats/maps-no_clusters/loyung-thumb.jpg" alt="Locations of visitors to this page" /></a></noscript>
+<!--PageEndHtml Block End-->
+</body>
+</html>

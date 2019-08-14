@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery formValidator表单验证插件</title>
+<meta name="description" content="jQuery formValidator表单验证插件" />
+<meta name="keywords" content="jQuery,formValidator,插件,表单,验证,插件,javascript,表单验证,提示层" />
+
+<script type="text/javascript" src="../../../jquery/jquery.min.js"></script>
+<script src="../formValidator-4.1.1.js" type="text/javascript"></script>
+<script src="../formValidatorRegex.js" type="text/javascript"></script>
+<script src="function.js" type="text/javascript"></script>
+
+
+<style type="text/css" media="all">
+body,div{font-size:12px;}
+tr{height:32px;}
+</style>
+</head>
+
+<body>
+
+<div style="width:760px;margin:0 auto;">
+<h3>jQuery formValidator表单验证插件示例</h3>
+<p><strong>自动构建提示层(AutoTip)：自动构建提示层。你无须自己放置div，插件自动回在校验控件后面添加提示层</strong></p>
+
+<form action="" method="post" name="form1" id="form1"> 
+	<table border="0px" style="font-size:12px" width="630px">
+		<tr> 
+			<td align="right">用户名:</td>
+			<td><input type="text" id="us" name="us" style="width:120px" value="" /></td>
+		</tr>
+		<tr> 
+			<td align="right">密码:</td>
+			<td><input type="password" id="password1" name="password1" style="width:120px" /></td>
+		</tr>
+		<tr> 
+			<td align="right">重复密码:</td>
+			<td><input type="password" id="password2" name="password2" style="width:120px" /></td>
+		</tr>
+		<tr> 
+			<td align="right">你的性别:</td>
+			<td><input type="radio" id="sex" value="1" name="xb_one" />男&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" id="sex1" value="2" name="xb_one" />女</td>
+			<td><div id="sexTip" style="width:280px"></div></td>
+		</tr>
+		<tr> 
+			<td align="right">你的年龄:</td>
+			<td><input type="text" id="nl" name="nl" style="width:120px" value="26" class="fv_input_text_default" /></td>
+		</tr>
+		<tr> 
+			<td align="right">出生日期:</td>
+			<td><input type="text" id="csny" name="csny" style="width:120px" value="1982-09-21" /></td>
+		</tr>
+		<tr>
+			<td align="right">身份证号</td>
+			<td><input name="sfzh" type="text" id="sfzh" style="width:150px" value="" /></td>
+		</tr>
+		<tr> 
+			<td align="right">电子邮箱:</td>
+			<td><input type="text" id="email" name="email" style="width:120px" /></td>
+		</tr>
+		<tr> 
+			<td align="right">你的学历:</td>
+			<td>
+				<select name="xueli" id="xueli">
+					<option value="">－－请选择你的学历－－</option>
+					<option value="a">专科</option>
+					<option value="b">本科</option>
+					<option value="c">研究生</option>
+					<option value="e">硕士</option>
+					<option value="d">博士</option>
+				</select>
+			</td>
+		</tr>
+		<tr> 
+			<td align="right">额外校验:</td>
+			<td><input name="ewjy" type="text" id="ewjy" style="width:120px" /></td>
+		</tr>
+		<tr> 
+			<td colspan="3">
+				国家区号 <input id="Tel_country" name="Tel_country" style="width: 20px;" value="" /> - 地区区号 <input id="Tel_area" name="Tel_area" style="width: 35px;" /> - 电话号码 <input id="Tel_number" name="Tel_number" style="width: 60px;" /> - 分机号码 <input id="Tel_ext" name="Tel_ext" style="width: 30px;" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3"><div id="teltip" style="width:280px"></div></td>
+		</tr>
+		<tr> 
+			<td align="right">兴趣爱好1:</td>
+			<td colspan="2">
+				<input type="checkbox" name="xqah_one" id="qq1"/>乒乓球 
+				<input type="checkbox" name="xqah_one" id="qq2" value="1" />羽毛球 
+				<input type="checkbox" name="xqah_one" id="qq3" value="2" />上网 
+				<input type="checkbox" name="xqah_one" id="qq4" value="3" />旅游
+				<input type="checkbox" name="xqah_one" id="qq5" value="4" />购物
+			</td>
+		</tr>
+		<tr> 
+			<td colspan="3"><div id="test3Tip" style="width:350px"></div></td>
+		</tr>
+		<tr> 
+			<td align="right">兴趣爱好2:</td>
+			<td colspan="2">
+				<input type="checkbox" name="xqah_more" id="pp0"/>乒乓球 
+				<input type="checkbox" name="xqah_more" id="pp1" value="5" />羽毛球 
+				<input type="checkbox" name="xqah_more" id="pp7" value="6" />上网 
+				<input type="checkbox" name="xqah_more" id="pp8" value="7" />旅游 
+				<input type="checkbox" name="xqah_more" id="pp9" value="8" />购物 
+				<input type="checkbox" name="xqah_more" id="pp6" value="9" />睡觉
+			</td>
+		</tr>
+		<tr> 
+			<td colspan="3"><div id="test2Tip" style="width:350px"></div></td>
+		</tr>
+		<tr> 
+			<td align="right">你爱国吗:</td>
+			<td colspan="2">
+				<input type="radio" name="aiguo" value="1" id="bb1"  />不爱 
+				<input type="radio" name="aiguo" id="bb2" value="2" />不发表意见 
+				<input type="radio" name="aiguo" id="nn3" value="3" />爱 
+				<input type="radio" name="aiguo" id="nn4" value="4" />爱死它了
+			</td>
+		</tr>
+		<tr> 
+			<td colspan="3"><div id="aiguoTip" style="width:280px"></div></td>
+		</tr>
+		<tr> 
+			<td align="right">手机号码:</td>
+			<td><input type="text" id="shouji" name="shouji" style="width:120px" /></td>
+			<td><div id="shoujiTip" style="width:280px"></div></td>
+		</tr>
+		<tr> 
+			<td align="right">联系电话:</td>
+			<td><input type="text" id="lxdh" name="lxdh" style="width:120px" /></td>
+			<td><div id="lxdhTip" style="width:280px"></div></td>
+		</tr>
+		<tr> 
+			<td align="right">手机或电话:</td>
+			<td><input type="text" id="sjdh" name="sjdh" style="width:120px" /></td>
+			<td><div id="sjdhTip" style="width:280px"></div></td>
+		</tr>
+		<tr> 
+			<td align="right" valign="top">多选select控件:</td>
+			<td valign="top">
+			<select name="selectmore" size="3" id="selectmore" multiple>
+			<option value="0">多选1</option>
+			<option value="1">多选2</option>
+			<option value="2">多选3</option>
+			</select>(按住ctrl键多选)
+			</td>
+			<td><div id="selectmoreTip" style="width:280px"></div></td>
+		</tr>
+		<tr> 
+			<td align="right" valign="top">你的描述:</td>
+			<td colspan="2" valign="top"> <textarea id="ms" name="ms" cols="50" rows="10">这里是十个中文字符哦</textarea></td>
+		</tr>
+		<tr> 
+			<td></td><td colspan="2"><div id="msTip" style="width:280px"></div></td>
+		</tr>
+		<tr>
+			<td></td><td colspan="2"><input type="submit" name="button" id="button" value="提交" /></td>
+		</tr>
+	</table>
+</form>
+</div>
+
+</body>
+</html>

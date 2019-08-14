@@ -1,0 +1,4 @@
+server:
+  port: 8088
+  #应用部署的上下文
+  context-path: /sso

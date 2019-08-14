@@ -1,0 +1,135 @@
+@charset "utf-8";
+/* CSS Document */
+html { height:100%; }
+.body_login{
+	background:url(../images/login/login_tmac.png);
+	background-size: cover;
+	background-color:#83b3f1;
+	height:100%;}
+*{ margin:0; padding:0; font-family:"微软雅黑";}
+a{ text-decoration:none;}
+a:active, a:visited {
+	color: blue;
+}
+
+.wall{ position:relative;}
+
+/* 暂时先用一张不存在的图片：login_tbg2.png */
+.login{
+	width:332px; height:396px;
+	background:url(../images/login/loginbg.jpg);
+	background-size: cover;
+	position:absolute; left:50%; margin-left:-166px; z-index:100;
+	top:55%;
+	margin-top:-280px;
+}
+.login .tabtit{ margin:0 auto; text-align:center; padding-top:120px;}
+.login .tabtit a{ padding:0 10px; font-size:14px; height:27px; display:inline-block; line-height:27px; color:#eee; border:1px solid #d4d4d4; border-bottom:none;}
+.login .tabtit a.ved{ border-top:2px solid #0e8bcb;height:26px; line-height:26px;}
+
+.login .conbox{ padding:0 20px 0 22px;}
+.login .conbox ul{ list-style:none; padding-top:10px;}
+.login .conbox li{ padding-top:7px; position:relative;}
+.login .conbox li span{ width:60px; text-align:right; padding-right:10px; display:inline-block; line-height:25px; font-size:12px; color:#666;}
+.login .conbox li input.txt{
+	margin-left: 5%;
+    border: 1px solid #d4d4d4;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    width: 80%;
+    height: 25px;
+    padding-left: 4px;
+    line-height: 25px;
+    color: #888;
+    font-size: 14px;
+}
+.login .conbox li select{ width:198px; height:25px;  border:none; line-height:25px; background:url(../images/login/qytxt.gif) no-repeat; color:#333; font-size:14px;}
+.login .conbox li input.yzm{  margin-left:20px; border:1px solid #d4d4d4; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius:3px; width:80px; height:25px; padding-left:4px; line-height:25px; color:#888; font-size:14px;}
+.login .conbox li input.bg1{ background:url(../images/login/yhmico.png) no-repeat 4px center #FFF; padding-left:25px;}
+.login .conbox li input.bg2{ background:url(../images/login/mimaico.png) no-repeat 4px center #FFF; padding-left:25px;}
+.login .conbox li input.bg3{ background:url(../images/login/yzmico.png) no-repeat 4px center #FFF; padding-left:25px;}
+.login .conbox li input.bg4{ background:url(../images/login/pin.png) no-repeat 4px center #FFF; padding-left:25px;}
+
+.login .conbox li input.jizhu{ position:relative; top:3px;  margin-left:20px;}
+.login .conbox li a.zh{ font-size:12px; color:#2d7ec3; text-decoration:underline; margin-left:10px;}
+.login .conbox li a.fsyzm{ padding:0 10px; line-height:25px; height:25px; background:#109ed3; color:#FFF; font-size:12px; display:inline-block; margin-left:10px;}
+.login .conbox li a.fsyzm:hover{ background:#0b7bb8;}
+.login .conbox li p{ line-height:18px; font-size:12px; color:#666; display:inline-block;}
+.login .conbox li p.jzmm{ line-height:27px; font-size:12px; color:#666; margin-left:5px;}
+.login .conbox li b{ width:80px; height:27px; font-weight:normal; position:relative; top:0px; right:30px; float:right; margin:0px 32px 0px 0px;}
+.login .conbox a.tjbtn{ 
+	    width: 90%;
+    height: 32px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    line-height: 32px;
+    display: inline-block;
+    text-align: center;
+    color: #FFF;
+    font-size: 14px;
+    margin: 10px auto 0 5%;
+    background: #1dc16e;
+}
+.login .conbox a.tjbtn:hover{ background:#0d9952;}
+.login .psbox{ height:36px; width:268px; padding:0 25px; line-height:36px; text-align:center; color:#444; font-size:12px; padding-top:10px;  position:absolute; bottom:12px; left:7px;}
+.login .psbox a{ width:30%; display:inline-block;line-height:36px; color:#444;}
+.login .psbox a:hover{ color:#000;}
+.login .ewm{ width:100%; text-align:center;}
+.login .ewm img{ margin-top:30px; display:inline-block;}
+
+.login .loginInBox{width: 90%;margin: 0 auto;margin-top: 10px;}
+
+.footer{ width:100%;line-height:30px; text-align:center; font-size:12px; color:#333; margin-top:80px; border:1px solid rgba(255,255,255,0.9); border-radius:100px; background-color:rgba(255,255,255,0.7)}
+.footer span{ color:#F00; font-size:12px;}
+
+.build{ position:absolute; left:50%; margin-left:-640px; bottom:-30px; }
+.add_com a{ color:#666; font-size:14px; display:block; height:128px; width:128px; line-height:128px; background:url(../images/login/add.png) no-repeat left center; padding:0 0 0 40px; text-decoration:none;}
+.add_com a:hover{ color:#22b6e7; background:url(../images/login/add_over.png) no-repeat left center;}
+.add_com2 a {color: #666;font-size: 14px;display: block;height: 35px; width: 128px;line-height: 35px;background: url(../images/login/add.png) no-repeat left center;padding: 0 0 0 40px; text-decoration: none;}
+.add_com2 a:hover {color: #22b6e7;background: url(../images/login/add_over.png) no-repeat left center;}
+
+.tc_nav{ padding:10px;font-size: 14px;width: 47%;float: left;}
+.sh_title01{ line-height:36px; position:relative; overflow:hidden; height:36px; clear:both;}
+.sh_title01 p{ position:absolute; background-color:#fff; left:100px;}
+.sh_title01 span{ display:block; border-bottom:1px solid #eeeeee; position:absolute; width:100%; top:18px;}
+.sh_title01 div{  font-weight:bold; background-color:#fff; font-size:16px; color:#333; position:absolute; z-index:1; padding-right:10px;}
+.sh_title01 a{ position:absolute; right:0px; background-color:#eee; border-radius:2px; height:20px; line-height:20px; color:#666; font-size:12px; padding:0px 10px; top:5px;}
+.sh_title01 a:hover{ color:#00a3cd;}
+
+/**按钮**/
+.btn{ line-height:28px; margin-right:5px; border-radius:1px; padding:0px 20px; display:inline-block; border:1px solid transparent; color:#fff;cursor:pointer;
+transition:opacity 0.5s;-moz-transition:opacity 0.5s;-webkit-transition:opacity 0.5s;-o-transition:opacity 0.5s;}
+.btn01{ background-color:#00a2c9}
+.btn01:hover{background-color:#00b3de;}
+.btn_read {
+	line-height: 28px;
+	margin-right: 5px;
+	border-radius: 1px;
+	padding: 0px 20px;
+	display: inline-block;
+	border: 1px solid transparent;
+	color: #999;
+	cursor: text;
+	transition: opacity 0.5s;
+	-moz-transition: opacity 0.5s;
+	-webkit-transition: opacity 0.5s;
+	-o-transition: opacity 0.5s;
+	background-color: #ddd;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

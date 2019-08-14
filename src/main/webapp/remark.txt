@@ -1,0 +1,164 @@
+通用sso改造完成 2018年11月5日16点00分
+
+本改造能同时适用于传统spring工程，也能支持spring boot工程。mark on 2019年8月4日21点59分
+
+传统spring工程 客户端做的配置：
+
+pom文件依赖：
+	<!-- 集成单点登录cas start-->
+	<dependency>
+		<groupId>org.jasig.cas.client</groupId>
+		<artifactId>cas-client-core</artifactId>
+		<version>3.4.0</version>
+	</dependency>
+	<!-- 集成单点登录cas end-->
+
+web.xml配置：
+只是一个例子，web.xml文件中加入下面的内容
+  <!-- ======= 单点登录配置 start ====== -->
+	<listener>
+        <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>CAS Single Sign Out Filter</filter-name>
+        <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+        <init-param>
+            <param-name>casServerUrlPrefix</param-name>
+            <!-- 此处配置的是 cas server 地址 -->
+<!--             <param-value>https://www.fanlychie.com:8443/cas</param-value> -->
+			<param-value>http://test.kun-sso-demo.com/sso</param-value>
+		 </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS Single Sign Out Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>CAS Authentication Filter</filter-name>
+        <filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
+        <init-param>
+            <param-name>casServerLoginUrl</param-name>
+            <!-- 此处配置的是 cas server 登录地址 -->
+<!--             <param-value>https://www.fanlychie.com:8443/cas/login</param-value> -->
+			<!-- 成功的 -->
+<!--
+ <param-value>http://127.0.0.1:8088/sso/login</param-value>
+ -->
+ 			<param-value>http://test.kun-sso-demo.com/sso/login</param-value>
+
+        </init-param>
+        <init-param>
+            <param-name>serverName</param-name>
+            <!-- 此处配置的是当前项目地址, 且必须使用 https 服务, 否则 cas server 无法认证 -->
+<!--             <param-value>https://www.fanlychie.com:8081</param-value>-->
+			<param-value>http://test.kun-sso-demo.com/KunCenter</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS Authentication Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>CAS Validation Filter</filter-name>
+        <filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
+        <init-param>
+            <param-name>casServerUrlPrefix</param-name>
+            <!-- 此处配置的是 cas server 地址 -->
+<!--
+                      <param-value>http://127.0.0.1:8088/sso</param-value>
+ -->
+<param-value>http://test.kun-sso-demo.com/sso</param-value>
+
+         </init-param>
+        <init-param>
+            <param-name>serverName</param-name>
+            <!-- 此处配置的是当前项目地址, 且必须使用 https 服务, 否则 cas server 无法认证 -->
+<!--             <param-value>https://www.fanlychie.com:8081</param-value>-->
+			<param-value>http://test.kun-sso-demo.com/KunCenter</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS Validation Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+        <filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>CAS Assertion Thread Local Filter</filter-name>
+        <filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CAS Assertion Thread Local Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- ======= 单点登录配置 end ====== -->
+
+
+spring boot工程 客户端做的配置：
+
+全局属性：
+server:
+  port: 8082
+
+cas:
+  server-url-prefix: http://localhost:8088/sso
+  server-login-url: http://localhost:8088/sso/login
+  client-host-url: http://localhost:8082
+  validation-type: cas
+
+pom文件：
+		<dependency>
+			<groupId>net.unicon.cas</groupId>
+			<artifactId>cas-client-autoconfig-support</artifactId>
+			<version>1.7.0-GA</version>
+		</dependency>
+
+启动类上加个注解@EnableCasClient：
+
+package com.kunspringbootwebtwo.demo;
+
+import net.unicon.cas.client.configuration.EnableCasClient;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@EnableCasClient
+@SpringBootApplication
+public class CasDemoWeblication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CasDemoWeblication.class, args);
+	}
+
+}
+
+
+本地调试项目时，可使用nginx模拟域名：
+	server {
+        listen 80;
+        server_name  test.kun-sso-demo.com;
+
+        location /KunWeb {
+            proxy_pass http://127.0.0.1:9090/KunWeb;
+        }
+
+         location /KunCenter {
+            proxy_pass http://127.0.0.1:9091/KunCenter;
+        }
+
+		location /sso {
+            proxy_pass http://127.0.0.1:8088/sso;
+        }
+    }
+
+
+本应用的关键点：
+tgc.cookieDomain 这个属性是指定TGC这个cookie是以什么域名写到浏览器，
+这个值很重要，因为会影响后面的cookie获取。
