@@ -56,4 +56,37 @@ public class SpringContextUtil implements ApplicationContextAware {
         Assert.notNull(applicationContext,
                 "applicationContext未注入,请在applicationContext.xml中定义SpringContextUtil");
     }
+
+    public static String getWEBINFPath(ApplicationContext applicationContext){
+
+        String path = applicationContext.getClassLoader().getResource("").toString();
+        if(System.getProperty("os.name").startsWith("Windows")){
+            path=path.replace('/', '\\');
+            path=path.replace("file:", "");
+            path=path.replace("classes\\", "");
+            path = path.substring(1);
+        }else{
+            path=path.replace("file:", "");
+            path=path.replace("classes/", "");
+        }
+
+        return path;
+    }
+
+    public static String getWEBINFPath(){
+
+        String path = getContext().getClassLoader().getResource("").toString();
+        if(System.getProperty("os.name").startsWith("Windows")){
+            path=path.replace('/', '\\');
+            path=path.replace("file:", "");
+            path=path.replace("classes\\", "");
+            path = path.substring(1);
+        }else{
+            path=path.replace("file:", "");
+            path=path.replace("classes/", "");
+        }
+
+        return path;
+    }
+
 }

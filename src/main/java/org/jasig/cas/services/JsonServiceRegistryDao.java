@@ -1,6 +1,7 @@
 package org.jasig.cas.services;
 
 
+import com.sso.server.utils.SpringContextUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jasig.cas.util.JsonSerializer;
@@ -11,16 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import javax.annotation.PreDestroy;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Path; 
+import java.io.*;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,6 +69,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Misagh Moayyed
  * @since 4.1.0
  */
+@DependsOn("springContextUtil")
 @Component("jsonServiceRegistryDao")
 public class JsonServiceRegistryDao implements ServiceRegistryDao {
 
@@ -89,18 +88,18 @@ public class JsonServiceRegistryDao implements ServiceRegistryDao {
     /**
      * The Service registry directory.
      */
-    private final Path serviceRegistryDirectory;
+    private Path serviceRegistryDirectory;
 
     /**
      * The Registered service json serializer.
      */
-    private final JsonSerializer<RegisteredService> registeredServiceJsonSerializer;
+    private JsonSerializer<RegisteredService> registeredServiceJsonSerializer;
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    private final Thread jsonServiceRegistryWatcherThread;
-    private final JsonServiceRegistryConfigWatcher jsonServiceRegistryConfigWatcher;
+    private Thread jsonServiceRegistryWatcherThread;
+    private JsonServiceRegistryConfigWatcher jsonServiceRegistryConfigWatcher;
 
     /**
      * Instantiates a new Json service registry dao.
@@ -140,11 +139,34 @@ public class JsonServiceRegistryDao implements ServiceRegistryDao {
      * @param configDirectory the config directory where service registry files can be found.
      * @throws IOException the IO exception
      */
-    @Autowired
     public JsonServiceRegistryDao(
         @Value("${service.registry.config.location:classpath:services}")
         final File configDirectory) throws IOException {
         this(Paths.get(configDirectory.getCanonicalPath()));
+    }
+
+
+    @Value("${service.registry.config.location:classpath:services}")
+    private String path;
+
+    @Autowired
+    public JsonServiceRegistryDao()throws IOException{
+        System.out.println(path);
+        File file = null;
+        if (StringUtils.isEmpty(path)){
+            String webinfPath = SpringContextUtil.getWEBINFPath();
+            file = new File(webinfPath + "classes/services");
+        }
+        this.serviceRegistryDirectory = Paths.get(file.getCanonicalPath());
+        Assert.isTrue(this.serviceRegistryDirectory.toFile().exists(), serviceRegistryDirectory + " does not exist");
+        Assert.isTrue(this.serviceRegistryDirectory.toFile().isDirectory(), serviceRegistryDirectory + " is not a directory");
+        this.registeredServiceJsonSerializer = new RegisteredServiceJsonSerializer();
+
+        this.jsonServiceRegistryConfigWatcher = new JsonServiceRegistryConfigWatcher(this);
+        this.jsonServiceRegistryWatcherThread = new Thread(this.jsonServiceRegistryConfigWatcher);
+        this.jsonServiceRegistryWatcherThread.setName(this.getClass().getName());
+        this.jsonServiceRegistryWatcherThread.start();
+        LOGGER.debug("Started service registry watcher thread");
     }
 
     @Override

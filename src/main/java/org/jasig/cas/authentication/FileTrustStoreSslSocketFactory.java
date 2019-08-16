@@ -1,5 +1,7 @@
 package org.jasig.cas.authentication;
 
+import com.sso.server.utils.SpringContextUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -9,16 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509KeyManager;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.Socket;
 import java.security.KeyStore;
 import java.security.Principal;
@@ -68,6 +63,9 @@ public final class FileTrustStoreSslSocketFactory extends SSLConnectionSocketFac
         super(getTrustedSslContext(trustStoreFile, trustStorePassword, trustStoreType));
     }
 
+    @Value("${http.client.truststore.file:classpath:truststore.jks}")
+    private static String filePath;
+
     /**
      * Gets the trusted ssl context.
      *
@@ -79,16 +77,23 @@ public final class FileTrustStoreSslSocketFactory extends SSLConnectionSocketFac
     private static SSLContext getTrustedSslContext(final File trustStoreFile, final String trustStorePassword,
                                             final String trustStoreType) {
         try {
-
+            File file = null;
+            if (StringUtils.isEmpty(filePath)){
+                String webinfPath = SpringContextUtil.getWEBINFPath();
+                file = new File(webinfPath + "classes/truststore.jks");
+            }
+            File targetFile = trustStoreFile;
             if (!trustStoreFile.exists() || !trustStoreFile.canRead()) {
-                throw new FileNotFoundException("Truststore file cannot be located at "
-                    + trustStoreFile.getCanonicalPath());
+                targetFile = file;
+                //trustStoreFile.getCanonicalPath()在window下会抛异常
+//                throw new FileNotFoundException("Truststore file cannot be located at "
+//                    + trustStoreFile.getCanonicalPath());
             }
 
             final KeyStore casTrustStore = KeyStore.getInstance(trustStoreType);
             final char[] trustStorePasswordCharArray = trustStorePassword.toCharArray();
 
-            try (final FileInputStream casStream = new FileInputStream(trustStoreFile)) {
+            try (final FileInputStream casStream = new FileInputStream(targetFile)) {
                 casTrustStore.load(casStream, trustStorePasswordCharArray);
             }
 
