@@ -25,7 +25,7 @@
 </head>
 
 <body class="body_login">
-<form:form method="post" id="hiddenForm" commandName="${commandName}" htmlEscape="true" cssStyle="display:none;">
+<form:form method="post" id="hiddenForm" modelAttribute="${modelAttribute}" htmlEscape="true" cssStyle="display:none;">
     <form:errors path="*" id="errMsg" cssClass="errors" element="div" htmlEscape="false" />
     <%--<form:errors path="errCode" id="errCode" cssClass="errors" element="div" htmlEscape="false" />--%>
 </form:form>
@@ -40,7 +40,7 @@
     </div>
     <!-- commandName -> modelAttribute -->
     <div class="conbox" id="con_one_1" style=" display: block;height:200px;">
-        <form:form method="post" id="upLoginForm" commandName="${commandName}" htmlEscape="true" target="hiddenFrame">
+        <form:form method="post" id="upLoginForm" modelAttribute="${modelAttribute}" htmlEscape="true" target="hiddenFrame">
             <input type="hidden" name="lt" value="${loginTicket}" />
             <input type="hidden" name="execution" value="${flowExecutionKey}" />
             <input type="hidden" name="_eventId" value="submit" />

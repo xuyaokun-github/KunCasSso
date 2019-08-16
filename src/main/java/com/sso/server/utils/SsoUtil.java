@@ -1,7 +1,7 @@
 package com.sso.server.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.kunghsu.cache.MemoryCache;
+import com.kunghsu.cache.CustomCacheManager;
 import com.kunghsu.vo.SessionVO;
 import com.kunghsu.vo.SsoLoginInfoVo;
 import org.jasig.cas.client.validation.Assertion;
@@ -51,7 +51,7 @@ public class SsoUtil {
             //TODO 可以从redis中取session，后续的优化
 
             //模拟
-            String sessionStr = (String) MemoryCache.getSessionCache(clientSessionId);
+            String sessionStr = (String) CustomCacheManager.getSessionCache(clientSessionId);
 
             sessionVo = JSONObject.parseObject(sessionStr, SessionVO.class);
         }
@@ -72,7 +72,7 @@ public class SsoUtil {
 //        sessionService.setSession(sessionVo.toJson());
 
         //模拟
-        MemoryCache.setSessionCache(clientSessionId, sessionVo.toJson());
+        CustomCacheManager.setSessionCache(clientSessionId, sessionVo.toJson());
 
         return sessionVo.getId();
     }

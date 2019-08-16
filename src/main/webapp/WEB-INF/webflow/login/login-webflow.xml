@@ -107,7 +107,7 @@
         </binder>
         <!-- 兼容性：commandName -> modelAttribute -->
         <on-entry>
-            <set name="viewScope.commandName" value="'credential'"/>
+            <set name="viewScope.modelAttribute" value="'credential'"/>
             <!--
             <evaluate expression="samlMetadataUIParserAction" />
             -->

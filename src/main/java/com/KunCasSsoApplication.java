@@ -1,5 +1,6 @@
 package com;
 
+import com.kunghsu.base.listener.SystemStartUpListener;
 import com.kunghsu.vo.SessionFilter;
 import org.jasig.cas.CasEnvironmentContextListener;
 import org.jasig.inspektr.common.web.ClientInfoThreadLocalFilter;
@@ -7,9 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
-import org.springframework.boot.context.embedded.ServletListenerRegistrationBean;
-import org.springframework.boot.context.embedded.ServletRegistrationBean;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
@@ -31,10 +35,22 @@ import java.util.Map;
 		"classpath:spring/deployerConfigContext.xml",
 		"classpath:spring/spring-configuration/*.xml",
 		"classpath:spring/spring-sso.xml"})
-public class KunSSOWebApplication {
+@ServletComponentScan
+public class KunCasSsoApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KunSSOWebApplication.class, args);
+
+		//注册监听器
+		SpringApplication springApplication = new SpringApplication(KunCasSsoApplication.class);
+		springApplication.addListeners(new SystemStartUpListener());
+		springApplication.run(args);
+
+	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		builder.listeners(new SystemStartUpListener());
+		return builder.sources(KunCasSsoApplication.class);
 	}
 
 

@@ -4,7 +4,7 @@
 package com.sso.server.principal;
 
 import com.alibaba.fastjson.JSONObject;
-import com.kunghsu.cache.MemoryCache;
+import com.kunghsu.cache.CustomCacheManager;
 import com.kunghsu.vo.SessionVO;
 import com.sso.server.utils.SsoUtil;
 import org.jasig.cas.authentication.principal.Principal;
@@ -45,7 +45,7 @@ public class KunRegisteredServiceUsernameProvider  implements RegisteredServiceU
 //		String str = JSONObject.fromObject(new SsoLoginInfoVo()).toString();
 //		return str;
 
-		String sessionStr = (String) MemoryCache.getSessionCache(principal.getId());
+		String sessionStr = (String) CustomCacheManager.getSessionCache(principal.getId());
 		SessionVO sessionVo = JSONObject.parseObject(sessionStr, SessionVO.class);
 		return JSONObject.toJSON(sessionVo.getAttribute(SsoUtil.SSO_SESSION_KEY)).toString();
 	}

@@ -5,7 +5,7 @@
 package com.sso.server.registry;
 
 
-import com.kunghsu.cache.MemoryCache;
+import com.kunghsu.cache.CustomCacheManager;
 import org.jasig.cas.authentication.principal.Service;
 import org.jasig.cas.ticket.ServiceTicketImpl;
 import org.jasig.cas.ticket.Ticket;
@@ -56,12 +56,12 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 //            ticketClient.set(ticket.getId(), ticket, 60 * 60 * 24 * 7 + "");
 
 			//暂时写个简单的内存缓存做模拟
-			MemoryCache.setCache(ticket.getId(), ticket, 60 * 60 * 24 * 7 + "");
+			CustomCacheManager.setCache(ticket.getId(), ticket, 60 * 60 * 24 * 7 + "");
             return;
         }
         //
 //		ticketClient.set(ticket.getId(), ticket, timeout + "");
-		MemoryCache.setCache(ticket.getId(), ticket, timeout + "");
+		CustomCacheManager.setCache(ticket.getId(), ticket, timeout + "");
 
 	}
 
@@ -76,8 +76,9 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 //			final Ticket t = ticketClient.get(ticketId);
 
 			//暂时用内存缓存来做模拟
-			Ticket t = (Ticket) MemoryCache.getCache(ticketId);
+//			Ticket t = CustomCacheManager.getCache(ticketId);
 
+			Ticket t = (Ticket) CustomCacheManager.getCache(ticketId);
 
 			if (t != null) {
 				logger.debug("#######Ticket不为空=###ticketId=="+t);
@@ -115,7 +116,7 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 //			ticketClient.delete(((TicketGrantingTicket) ticket).getAuthentication().getPrincipal().getId());
 
 			//暂时先用内存缓存来做模拟
-			MemoryCache.delete(((TicketGrantingTicket) ticket).getAuthentication().getPrincipal().getId());
+			CustomCacheManager.delete(((TicketGrantingTicket) ticket).getAuthentication().getPrincipal().getId());
 
 		}
 
@@ -126,7 +127,7 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 //			ticketClient.delete(ticketId);
 
 			//暂时先用内存缓存来做模拟
-			MemoryCache.delete(ticketId);
+			CustomCacheManager.delete(ticketId);
 
 			return true;
 		} catch (final Exception e) {
@@ -151,7 +152,7 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 //					ticketClient.delete(entry.getKey());
 
 					//暂时先用内存缓存来做模拟
-					MemoryCache.delete(entry.getKey());
+					CustomCacheManager.delete(entry.getKey());
 
 					logger.trace("Scheduled deletion of service ticket [{}]", entry.getKey());
 				} catch (final Exception e) {
@@ -190,12 +191,12 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 
         	//TODO
 //            ticketClient.set(ticket.getId(), ticket, 60 * 60 * 24 * 7 + "");
-			MemoryCache.setCache(ticket.getId(), ticket, 60 * 60 * 24 * 7 + "");
+			CustomCacheManager.setCache(ticket.getId(), ticket, 60 * 60 * 24 * 7 + "");
 			return;
         }
 		//TODO
 //		ticketClient.set(ticket.getId(), ticket, timeout + "");
-		MemoryCache.setCache(ticket.getId(), ticket, timeout + "");
+		CustomCacheManager.setCache(ticket.getId(), ticket, timeout + "");
 
 	}
 

@@ -2,7 +2,7 @@ package com.kunghsu.filter;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.kunghsu.cache.MemoryCache;
+import com.kunghsu.cache.CustomCacheManager;
 import com.kunghsu.vo.SessionVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -191,9 +191,9 @@ public class SessionWrap implements HttpSession {
 //            String sessionStr = sessionService.getSession(sessionId);
 
             //这个session,可以暂时模拟
-            String sessionStr = (String) MemoryCache.getSessionCache(sessionId);
+            String sessionStr = (String) CustomCacheManager.getSessionCache(sessionId);
 
-            SessionVO sessionVo = (SessionVO) JSONObject.parseObject(sessionStr, SessionVO.class);
+            SessionVO sessionVo = JSONObject.parseObject(sessionStr, SessionVO.class);
             return sessionVo;
         }
     }
@@ -207,7 +207,7 @@ public class SessionWrap implements HttpSession {
 //        sessionService.setSession(JsonUtil.toJSONString(sessionVo));
 
         //模拟
-        MemoryCache.setSessionCache(this.getSessionId(), JSONObject.toJSON(sessionVo).toString());
+        CustomCacheManager.setSessionCache(this.getSessionId(), JSONObject.toJSONString(sessionVo));
 
 
     }
