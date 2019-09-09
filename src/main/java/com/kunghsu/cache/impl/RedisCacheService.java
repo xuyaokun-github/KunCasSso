@@ -12,14 +12,6 @@ public class RedisCacheService implements IObjectCacheService{
     @Override
     public void setCache(String key, Object value, String expiresTime) {
 
-//        String val = JSONObject.toJSONString(value);
-//
-//        if (StringUtils.isEmpty(expiresTime)){
-//            RedissonUtil.setString(key, val);
-//        }else {
-//            RedissonUtil.setString(key, val, Long.valueOf(expiresTime));
-//        }
-
         if (StringUtils.isEmpty(expiresTime)){
             RedissonUtil.setObject(key, value);
         }else {
@@ -36,7 +28,6 @@ public class RedisCacheService implements IObjectCacheService{
 
     @Override
     public Object getCache(String key) {
-//        return JSONObject.parseObject(RedissonUtil.getString(key), Object.class);
         return RedissonUtil.getObject(key);
         //基于Jedis操作
 //        return JedisUtil.getInstance().getByteObject(key);

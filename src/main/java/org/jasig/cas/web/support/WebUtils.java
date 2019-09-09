@@ -26,7 +26,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.List;
 
@@ -250,21 +249,6 @@ public final class WebUtils {
     }
 
     /**
-     * Gets the ticket granting ticket id from the request and flow scopes.
-     *
-     * @param context the context
-     * @return the ticket granting ticket id
-     */
-    public static String getTicketGrantingTicketId(
-             final RequestContext context) {
-        final String tgtFromRequest = (String) context.getRequestScope().get("ticketGrantingTicketId");
-        final String tgtFromFlow = (String) context.getFlowScope().get("ticketGrantingTicketId");
-
-        return tgtFromRequest != null ? tgtFromRequest : tgtFromFlow;
-
-    }
-
-    /**
      * Put service ticket in request scope.
      *
      * @param context the context
@@ -273,6 +257,21 @@ public final class WebUtils {
     public static void putServiceTicketInRequestScope(
         final RequestContext context, final ServiceTicket ticketValue) {
         context.getRequestScope().put("serviceTicketId", ticketValue.getId());
+    }
+
+    /**
+     * Gets the ticket granting ticket id from the request and flow scopes.
+     *
+     * @param context the context
+     * @return the ticket granting ticket id
+     */
+    public static String getTicketGrantingTicketId(
+            final RequestContext context) {
+        final String tgtFromRequest = (String) context.getRequestScope().get("ticketGrantingTicketId");
+        final String tgtFromFlow = (String) context.getFlowScope().get("ticketGrantingTicketId");
+
+        return tgtFromRequest != null ? tgtFromRequest : tgtFromFlow;
+
     }
 
     /**

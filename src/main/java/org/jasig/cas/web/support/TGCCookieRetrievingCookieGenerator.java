@@ -21,7 +21,7 @@ public class TGCCookieRetrievingCookieGenerator extends CookieRetrievingCookieGe
     @Autowired
     public TGCCookieRetrievingCookieGenerator(@Qualifier("defaultCookieValueManager")
         final CookieValueManager casCookieValueManager) {
-        // modified by dain 2016-07-30 不使用注入的manager，不对cookie中的tgc进行加密处理
+        //不使用注入的manager，不对cookie中的tgc进行加密处理
         super(new NoOpCookieValueManager());
     }
 
@@ -59,7 +59,7 @@ public class TGCCookieRetrievingCookieGenerator extends CookieRetrievingCookieGe
                                 final int max) {
         super.setRememberMeMaxAge(max);
     }
-    //add by yangwen   2017-07-07
+
     @Autowired
     public void setCookieDomain(@Value("${tgc.cookieDomain:}") String cookieDomain) {
         if ((cookieDomain != null) && (!"".equals(cookieDomain))) {

@@ -6,6 +6,7 @@ package com.sso.server.authencation;
 import com.kunghsu.vo.SessionFilter;
 import com.kunghsu.vo.SsoLoginInfoVo;
 import com.sso.server.credential.BaseCredential;
+import com.sso.server.exception.KunLoginException;
 import com.sso.server.utils.SsoUtil;
 import org.jasig.cas.authentication.Credential;
 import org.jasig.cas.authentication.HandlerResult;
@@ -50,10 +51,17 @@ public class UsernamePasswordAuthencationHandler extends BaseAbstractAuthencatio
 		System.out.println("username:" + baseCredential.getUserName());
 		System.out.println("passWord:" + baseCredential.getPassWord());
 
+		if (!"xyk".equals(baseCredential.getUserName())){
+			throw new KunLoginException("用户不合法，请重新登录");
+		}
+
 		// 假如登录成功，继续往下执行
+		//封装单点登录信息，这类信息可能各个客户端都会从中取出关键业务信息
+		//可以使用自定义的对象,客户端可以把这个VO从断言对象中取出来
 		SsoLoginInfoVo ssoLoginInfoVo = new SsoLoginInfoVo();
 		ssoLoginInfoVo.setUsername(baseCredential.getUserName());
 		ssoLoginInfoVo.setPassword(baseCredential.getPassWord());
+		ssoLoginInfoVo.add("time", "" + System.currentTimeMillis());
 
 		//注意，登录成功，要创建session
 		SsoUtil.createSession(ssoSessionId, ssoLoginInfoVo, "1");

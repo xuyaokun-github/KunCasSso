@@ -21,7 +21,7 @@ public class CustomCacheManager {
     }
 
     public static <T> void setCache(String key, T value, String expiresTime){
-        objectCacheService.setCache(key, value, null);
+        objectCacheService.setCache(key, value, expiresTime);
     }
 
     public static <T> T getCache(String key){

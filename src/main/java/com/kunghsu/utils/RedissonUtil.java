@@ -108,6 +108,19 @@ public class RedissonUtil {
         return isExpireSuccess;
     }
 
+    public static boolean setExpireTime(String objectName, long... timeToLive){
+
+        RExpirable object = redissonClient.getBucket(objectName);
+        boolean isExpireSuccess = false;
+        if(timeToLive != null && timeToLive.length > 0){
+            isExpireSuccess = object.expire(timeToLive[0], TimeUnit.SECONDS);
+        }else{
+            //清过期时间，表示永久存
+            isExpireSuccess = object.clearExpire();
+        }
+        return isExpireSuccess;
+    }
+
     /** ================================下面部分还没做封装优化工作==========================================*/
 
     /**

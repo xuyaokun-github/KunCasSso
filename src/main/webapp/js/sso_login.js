@@ -58,32 +58,19 @@ function upLogin() {
     $("#upLoginForm").submit();
 }
 
-function checkQyCa(){
-
-}
-
 function regist(){
-    layer.open({
-        type: 2,
-        title: '注册',
-        fix: false,
-        maxmin: false,
-        area: ['1100px', '500px'],
-        content: '/yhgl/service/um/user/init' //说要改成跳转到各自的地址
-    });
+
 }
 function resetPwd(){
-    layer.open({
-        type: 2,
-        title: '找回密码',
-        fix: false,
-        maxmin: false,
-        area: ['1100px', '500px'],
-        content: '/yhgl/service/um/user/init/zhmm' //保证同个域名下，不然会导致不会自动关闭对话框
-    });
+
 }
 
-
+/**
+ * 登录成功之后为什么触发这个方法？
+ * 因为webflow的最后一步是跳转到casGenericSuccessView页面
+ * 而upLoginForm的target指定了hiddenFrame，所以casGenericSuccessView页面会刷新到hiddenFrame这个iframe中
+ * 因此会触发hiddenFrame的attachEvent的事件，初始化时绑定的
+ */
 function checkLoginState(){
 
     //检查session中是否有登录信息
@@ -111,6 +98,9 @@ function checkLoginState(){
 function loginSuccess(){
     var $hiddenForm = $("#hiddenForm");
     $hiddenForm.attr("action",$hiddenForm.attr("action").replace("/login",""));
+    //当后端的webflow走完之后，跳转到jsp页面时，会触发前端的这个函数
+    //最终会请求例如：http://localhost:8088/sso?service=http%3A%2F%2Flocalhost%3A8082%2Ftest
+    //再次进入后端的webflow流程，继续从InitialFlowSetupAction开始
     $hiddenForm.submit();
 }
 

@@ -71,9 +71,12 @@ public class AuthenticationViaFormAction implements IAuthenticationViaFormAction
 	 * @since 4.1.0
 	 */
 	public Event submit(RequestContext context, Credential credential, MessageContext messageContext)  {
+
 		// 单点登录时 不做loginTicket验证
+		//single是自定义的参数，用来区分是非页面方式登录（例如桌面客户端应用需要加入单点）还是页面登录
 		String o = context.getRequestParameters().get("single");
 		if (o == null || o == "") {
+			//假如single参数为空，说明是页面方式，需要检验登录票据LT
 			if (!checkLoginTicketIfExists(context)) {
 				return returnInvalidLoginTicketEvent(context, messageContext);
 			}
@@ -83,22 +86,6 @@ public class AuthenticationViaFormAction implements IAuthenticationViaFormAction
 		}
 		return createTicketGrantingTicket(context, credential, messageContext);
 	}
-
-	public void submit2(String message)  {
-		System.out.println("submit2");
-	}
-
-	/**
-	 * org.springframework.expression.spel.SpelEvaluationException: EL1004E:(pos 28): Method call:
-	 * Method submit(org.springframework.webflow.engine.impl.RequestControlContextImpl,
-	 com.sso.server.credential.BaseCredential,
-	 org.springframework.binding.message.DefaultMessageContext) cannot be found on org.jasig.cas.web.flow.AuthenticationViaFormAction type
-	 */
-
-//	public Event submit(RequestControlContextImpl context, BaseCredential credential, DefaultMessageContext messageContext)  {
-//
-//		return submitOld(context, credential, messageContext);
-//	}
 
 	/**
 	 * Tries to to determine if the login ticket in the request flow scope

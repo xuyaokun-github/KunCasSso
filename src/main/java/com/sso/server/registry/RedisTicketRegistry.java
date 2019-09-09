@@ -6,6 +6,7 @@ package com.sso.server.registry;
 
 
 import com.kunghsu.cache.CustomCacheManager;
+import com.kunghsu.utils.RedissonUtil;
 import org.jasig.cas.authentication.principal.Service;
 import org.jasig.cas.ticket.ServiceTicketImpl;
 import org.jasig.cas.ticket.Ticket;
@@ -51,16 +52,9 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
         if ("true".equals(appCLient)) {
 
         	//票据放到redis中保存
-
-			//TODO 后续缓存肯定要改成用redis
-//            ticketClient.set(ticket.getId(), ticket, 60 * 60 * 24 * 7 + "");
-
-			//暂时写个简单的内存缓存做模拟
 			CustomCacheManager.setCache(ticket.getId(), ticket, 60 * 60 * 24 * 7 + "");
             return;
         }
-        //
-//		ticketClient.set(ticket.getId(), ticket, timeout + "");
 		CustomCacheManager.setCache(ticket.getId(), ticket, timeout + "");
 
 	}
@@ -71,13 +65,7 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 		try {
 			logger.debug("#######cookie不为空=###ticketId=="+ticketId);
 
-			//TODO 根据ticketID从缓存中获取票据
-//			RedisObjectClient ticketClient = RedisManager.getInstance().createClient("ticketCache");
-//			final Ticket t = ticketClient.get(ticketId);
-
-			//暂时用内存缓存来做模拟
-//			Ticket t = CustomCacheManager.getCache(ticketId);
-
+			//根据ticketID从缓存中获取票据
 			Ticket t = (Ticket) CustomCacheManager.getCache(ticketId);
 
 			if (t != null) {
@@ -110,23 +98,14 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 			deleteChildren((TicketGrantingTicket) ticket);
 
 			//删除TGT对应的session信息
-
-			//TODO 从redis中删除session信息
-//			RedisObjectClient ticketClient = RedisManager.getInstance().createClient("ticketCache");
-//			ticketClient.delete(((TicketGrantingTicket) ticket).getAuthentication().getPrincipal().getId());
-
-			//暂时先用内存缓存来做模拟
+			//从redis中删除session信息
 			CustomCacheManager.delete(((TicketGrantingTicket) ticket).getAuthentication().getPrincipal().getId());
 
 		}
 
 		logger.debug("Deleting ticket {}", ticketId);
 		try {
-			//TODO 从redis中删除票据
-// 			RedisObjectClient ticketClient = RedisManager.getInstance().createClient("ticketCache");
-//			ticketClient.delete(ticketId);
-
-			//暂时先用内存缓存来做模拟
+			//从redis中删除票据
 			CustomCacheManager.delete(ticketId);
 
 			return true;
@@ -147,11 +126,7 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 		if (services != null && !services.isEmpty()) {
 			for (final Map.Entry<String, Service> entry : services.entrySet()) {
 				try {
-					//TODO 改成从redis中移除
-//					RedisObjectClient ticketClient = RedisManager.getInstance().createClient("ticketCache");
-//					ticketClient.delete(entry.getKey());
-
-					//暂时先用内存缓存来做模拟
+					//从redis中移除
 					CustomCacheManager.delete(entry.getKey());
 
 					logger.trace("Scheduled deletion of service ticket [{}]", entry.getKey());
@@ -177,7 +152,6 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 		final Ticket ticket = encodeTicket(ticketToUpdate);
 		logger.debug("Updating ticket {}", ticket);
 
-//		RedisObjectClient ticketClient = RedisManager.getInstance().createClient("ticketCache");
         String appCLient = "false";
         if (ticket instanceof TicketGrantingTicket) {
             TicketGrantingTicket tgt = (TicketGrantingTicket) ticketToUpdate;
@@ -188,14 +162,9 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
             appCLient = (String) tgt.getAuthentication().getPrincipal().getAttributes().get("APP_CLIENT");
         }
         if ("true".equals(appCLient)) {
-
-        	//TODO
-//            ticketClient.set(ticket.getId(), ticket, 60 * 60 * 24 * 7 + "");
 			CustomCacheManager.setCache(ticket.getId(), ticket, 60 * 60 * 24 * 7 + "");
 			return;
         }
-		//TODO
-//		ticketClient.set(ticket.getId(), ticket, timeout + "");
 		CustomCacheManager.setCache(ticket.getId(), ticket, timeout + "");
 
 	}
@@ -214,28 +183,18 @@ public final class RedisTicketRegistry extends AbstractCrypticTicketRegistry imp
 			String sessionId = ((TicketGrantingTicket)ticket).getAuthentication().getPrincipal().getId();
 			logger.debug("expireSession [{}] in [{}] seconds.", sessionId,this.timeout);
 			//刷新TGT对应的session信息的超时时间
-
-			//之前的设计是通过一个会话中心来存储session
-//			ISessionService sessionService = BondeInterfaceFactory.getInstance().getInterface(ISessionService.class);
-
 			TicketGrantingTicket tgt = (TicketGrantingTicket) ticket;
             String appCLient = (String) tgt.getAuthentication().getPrincipal().getAttributes().get("APP_CLIENT");
 
             if ("true".equals(appCLient)) {
-
-            	//假如后面改成用redis来存session之后，要更新redis里的过期时间 TODO
-
+            	//用redis来存session之后，要更新redis里的过期时间
             	//设置session的过期时间
-//                sessionService.expireSession(tgt.getAuthentication().getPrincipal().getId(), 60 * 60 * 24 * 7 + "");
-
+				RedissonUtil.setExpireTime(tgt.getAuthentication().getPrincipal().getId(), 60 * 60 * 24 * 7);
 
                 return;
             }
 
-
-			//假如后面改成用redis来存session之后，要更新redis里的过期时间 TODO
-//            sessionService.expireSession(tgt.getAuthentication().getPrincipal().getId(), this.timeout + "");
-
+			RedissonUtil.setExpireTime(tgt.getAuthentication().getPrincipal().getId(), this.timeout);
 		}
 	}
 }

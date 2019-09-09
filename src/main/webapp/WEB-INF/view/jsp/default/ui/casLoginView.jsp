@@ -36,7 +36,7 @@
     <h1>KunSSOWeb</h1>
     <div class="tabtit">
         <a href="javascript:setTab('one', 1, 3);" style="width: 32%;" class="ved" id="one1">用户名登录</a>
-        <a href="javascript:setTab('one', 2, 3);checkQyCa();" style="width: 32%;" id="one2" style="border-left:none;">其他登录</a>
+        <a href="javascript:setTab('one', 2, 3);" style="width: 32%;" id="one2" style="border-left:none;">其他登录</a>
     </div>
     <!-- commandName -> modelAttribute -->
     <div class="conbox" id="con_one_1" style=" display: block;height:200px;">
