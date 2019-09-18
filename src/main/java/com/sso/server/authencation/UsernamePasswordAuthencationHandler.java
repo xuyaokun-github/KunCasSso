@@ -14,6 +14,8 @@ import org.jasig.cas.authentication.PreventedException;
 
 import java.security.GeneralSecurityException;
 
+import static com.sso.server.constant.SsoContant.SSO_SESSION_KEY;
+
 /**
  *
  * @project web-sso-cas
@@ -65,7 +67,7 @@ public class UsernamePasswordAuthencationHandler extends BaseAbstractAuthencatio
 
 		//注意，登录成功，要创建session
 		SsoUtil.createSession(ssoSessionId, ssoLoginInfoVo, "1");
-		SessionFilter.getRequest().getSession().setAttribute(SsoUtil.SSO_SESSION_KEY, ssoLoginInfoVo);
+		SessionFilter.getRequest().getSession().setAttribute(SSO_SESSION_KEY, ssoLoginInfoVo);
 
 		//返回结果
 		return createHandlerResult(credential, this.principalFactory.createPrincipal(ssoSessionId), null);

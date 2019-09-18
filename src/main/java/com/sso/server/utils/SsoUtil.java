@@ -9,9 +9,9 @@ import org.jasig.cas.client.validation.Assertion;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-public class SsoUtil {
+import static com.sso.server.constant.SsoContant.SSO_SESSION_KEY;
 
-    public static String SSO_SESSION_KEY = "loginInfo";
+public class SsoUtil {
 
     public static SsoLoginInfoVo getSsoLoginInfo(HttpServletRequest request) {
         SsoLoginInfoVo ssoLoginInfoVo = (SsoLoginInfoVo)request.getSession().getAttribute("loginInfo");
@@ -20,7 +20,7 @@ public class SsoUtil {
             if (assertion != null) {
                 try {
                     ssoLoginInfoVo = (SsoLoginInfoVo) JSONObject.parseObject(assertion.getPrincipal().getName(), SsoLoginInfoVo.class);
-                    request.getSession().setAttribute("loginInfo", ssoLoginInfoVo);
+                    request.getSession().setAttribute(SSO_SESSION_KEY, ssoLoginInfoVo);
                 } catch (Exception var4) {
                     throw new RuntimeException(var4);
                 }
@@ -35,7 +35,7 @@ public class SsoUtil {
      *
      * @param clientSessionId
      * @param loginInfo
-     * @param sessionType
+     * @param sessionType（自定义session类型，不仅仅是30分钟，可扩展各种时长）
      * @return
      */
     public static String createSession(String clientSessionId, SsoLoginInfoVo loginInfo, String sessionType) {
@@ -43,16 +43,10 @@ public class SsoUtil {
 
         if (clientSessionId != null && !"".equals(clientSessionId)) {
             //根据sessionID获取session
+            //以前的设计是从会话中心去获取sessionID，现在改成从redis中获取
 
-            //以前的设计是从会话中心去获取sessionID
-//            ISessionService sessionService = BondeInterfaceFactory.getInstance().getInterface(ISessionService.class);
-//            String sessionStr = sessionService.getSession(clientSessionId);
-
-            //TODO 可以从redis中取session，后续的优化
-
-            //模拟
+            //从redis中取session，后续的优化
             String sessionStr = (String) CustomCacheManager.getSessionCache(clientSessionId);
-
             sessionVo = JSONObject.parseObject(sessionStr, SessionVO.class);
         }
         if (sessionVo == null) {
@@ -65,13 +59,8 @@ public class SsoUtil {
         if ("1".equals(sessionType)) {
             sessionVo.setMaxInactiveInterval(60 * 60 * 24 * 7);
         }
-        sessionVo.setAttribute(SsoUtil.SSO_SESSION_KEY, loginInfo);
+        sessionVo.setAttribute(SSO_SESSION_KEY, loginInfo);
 
-        //之前的设计
-//        ISessionService sessionService = BondeInterfaceFactory.getInstance().getInterface(ISessionService.class);
-//        sessionService.setSession(sessionVo.toJson());
-
-        //模拟
         CustomCacheManager.setSessionCache(clientSessionId, sessionVo.toJson());
 
         return sessionVo.getId();

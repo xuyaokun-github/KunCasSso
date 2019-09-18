@@ -3,7 +3,6 @@ package com.sso.server.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kunghsu.vo.SsoLoginInfoVo;
-import com.sso.server.utils.SpringContextUtil;
 import com.sso.server.utils.SsoUtil;
 import org.jasig.cas.authentication.principal.Service;
 import org.jasig.cas.logout.DefaultLogoutRequest;
@@ -15,7 +14,6 @@ import org.jasig.cas.services.ServicesManager;
 import org.jasig.cas.ticket.Ticket;
 import org.jasig.cas.ticket.TicketGrantingTicket;
 import org.jasig.cas.ticket.registry.TicketRegistry;
-import org.jasig.cas.web.flow.AuthenticationViaFormAction;
 import org.jasig.cas.web.flow.FrontChannelLogoutAction;
 import org.jasig.cas.web.support.CookieRetrievingCookieGenerator;
 import org.slf4j.Logger;
@@ -35,7 +33,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.*;
 
@@ -133,7 +130,6 @@ public class AuthController {
 			responseData.put("flag", "error");
 		}else{
 			responseData.put("flag", "ok");
-			//登录成功之后查询该用户的所有企业身份供其选择
 			responseData.put("ssoLoginInfo", loginInfo);
 		}
 		response.getWriter().write(new ObjectMapper().writeValueAsString(responseData));
@@ -224,33 +220,5 @@ public class AuthController {
 		return url;
 	}
 
-    @RequestMapping(value = "/test.do")
-    public void test(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Map<String,Object> responseData = new HashMap<String,Object>();
-
-        //反射查看类型
-        AuthenticationViaFormAction action = SpringContextUtil.getBean("authenticationViaFormAction");
-
-
-        Method[] methods = action.getClass().getDeclaredMethods();
-        for (Method method : methods){
-            if ("submit".equals(method.getName())){
-				System.out.println(method.getName());
-				Class[] classes = method.getParameterTypes();
-                for (Class clazz : classes){
-                    System.out.println(clazz.getTypeName());
-                }
-            }
-
-            if ("submit2".equals(method.getName())){
-				System.out.println(method.getName());
-				Class[] classes = method.getParameterTypes();
-				for (Class clazz : classes){
-					System.out.println(clazz.getTypeName());
-				}
-			}
-        }
-        response.getWriter().write(new ObjectMapper().writeValueAsString(responseData));
-    }
 
 }

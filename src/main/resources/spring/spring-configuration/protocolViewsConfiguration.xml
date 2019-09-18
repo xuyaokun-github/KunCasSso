@@ -45,7 +45,8 @@
     <bean id="postResponseView" class="org.springframework.web.servlet.view.JstlView"
           c:url="/WEB-INF/view/jsp/protocol/casPostResponseView.jsp" />
 
-	<!-- 定向到一般请求 -->
+	<!-- 定向到一般请求
+	    访问/kun/singlePage接口，返回json,桌面客户端拿到json获取TGC-->
 	<bean id="appResponseView" class="org.springframework.web.servlet.view.InternalResourceView"
-          c:url="/kun/singlePage.do" />
+          c:url="/kun/singlePage" />
 </beans>

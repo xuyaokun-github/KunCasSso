@@ -22,4 +22,9 @@ public class BaseController {
 	
 	private static final Logger log = LoggerFactory.getLogger(BaseController.class);
 
+	public static String trim(Object o) {
+		if (o == null) return "";
+		return String.valueOf(o).trim();
+	}
+
 }

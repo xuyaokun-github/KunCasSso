@@ -183,12 +183,14 @@
         <transition to="postRedirectDecision"/>
     </action-state>
 
-	<!-- 非页面登录判断  -->
+	<!-- 非页面登录判断
+	    登录成功之后，会跳转到appView这个state-->
     <decision-state id="appRedirectDecision">
     	<if test="requestParameters.single != null and requestParameters.single != ''" then="appView" else="viewGenericLoginSuccess" />
     </decision-state>
 
-	<!-- 返回JSON响应 -->
+	<!-- 返回JSON响应
+	     appResponseView对应的是springmvc定义的一个接口-->
     <end-state id="appView" view="appResponseView" >
         <!-- view="externalRedirect:contextRelative:/singlePage.do"> -->
 		<on-entry>
