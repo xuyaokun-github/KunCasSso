@@ -1,4 +1,4 @@
-package com.kunghsu.utils;
+package com.sso.server.utils;
 
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;

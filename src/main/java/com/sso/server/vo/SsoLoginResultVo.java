@@ -1,4 +1,4 @@
-package com.kunghsu.vo;
+package com.sso.server.vo;
 
 import java.io.Serializable;
 

@@ -1,7 +1,7 @@
-package com.kunghsu.cache.impl;
+package com.sso.server.cache.impl;
 
-import com.kunghsu.cache.ISessionCacheService;
-import com.kunghsu.utils.RedissonUtil;
+import com.sso.server.cache.ISessionCacheService;
+import com.sso.server.utils.RedissonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

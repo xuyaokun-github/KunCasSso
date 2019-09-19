@@ -1,9 +1,9 @@
 package com.sso.server.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.kunghsu.cache.CustomCacheManager;
-import com.kunghsu.vo.SessionVO;
-import com.kunghsu.vo.SsoLoginInfoVo;
+import com.sso.server.cache.CustomCacheManager;
+import com.sso.server.vo.SessionVO;
+import com.sso.server.vo.SsoLoginInfoVo;
 import org.jasig.cas.client.validation.Assertion;
 
 import javax.servlet.http.HttpServletRequest;

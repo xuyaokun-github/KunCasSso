@@ -1,6 +1,6 @@
-package com.kunghsu.config;
+package com.sso.server.config;
 
-import com.kunghsu.utils.RedissonUtil;
+import com.sso.server.utils.RedissonUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.SerializationCodec;

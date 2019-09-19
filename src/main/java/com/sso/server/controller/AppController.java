@@ -1,8 +1,8 @@
 package com.sso.server.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.kunghsu.cache.CustomCacheManager;
-import com.kunghsu.vo.SessionVO;
+import com.sso.server.cache.CustomCacheManager;
+import com.sso.server.vo.SessionVO;
 import com.sso.server.utils.SsoUtil;
 import org.jasig.cas.web.support.WebUtils;
 import org.springframework.context.annotation.Scope;

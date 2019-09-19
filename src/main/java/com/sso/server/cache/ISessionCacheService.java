@@ -1,4 +1,4 @@
-package com.kunghsu.cache;
+package com.sso.server.cache;
 
 public interface ISessionCacheService {
 

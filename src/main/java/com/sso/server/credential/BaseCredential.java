@@ -28,6 +28,8 @@ public class BaseCredential implements Credential, Serializable  {
 	/** 以下参数是com.sso.server.authencation.UsernamePasswordAuthencation校验器需要的 **/
 	String userName;
 	String passWord;
+	//除了最基本的用户名和密码之外，还有其他验证需要用到的信息都可以从前端传过来
+	//假如需要扩展，就通过增加字段与之对应
 	String captchCode;
 	String single;
 	String kunTgc;
@@ -35,10 +37,10 @@ public class BaseCredential implements Credential, Serializable  {
 	String qddm;
 
 	/**滑块验证码需要的参数**/
-	String   csessionid;
-	String   sig;
-	String   token;
-	String   scene;
+	String csessionid;
+	String sig;
+	String token;
+	String scene;
 
 	/**
 	 * 单点登录时，供webflow调用

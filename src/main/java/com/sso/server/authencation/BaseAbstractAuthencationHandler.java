@@ -3,7 +3,7 @@
  */
 package com.sso.server.authencation;
 
-import com.kunghsu.vo.SessionFilter;
+import com.sso.server.filter.SessionFilter;
 import com.sso.server.credential.BaseCredential;
 import com.sso.server.exception.KunLoginException;
 import lombok.extern.slf4j.Slf4j;

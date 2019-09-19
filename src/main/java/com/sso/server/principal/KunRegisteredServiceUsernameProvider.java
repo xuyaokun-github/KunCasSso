@@ -4,8 +4,8 @@
 package com.sso.server.principal;
 
 import com.alibaba.fastjson.JSONObject;
-import com.kunghsu.cache.CustomCacheManager;
-import com.kunghsu.vo.SessionVO;
+import com.sso.server.cache.CustomCacheManager;
+import com.sso.server.vo.SessionVO;
 import org.jasig.cas.authentication.principal.Principal;
 import org.jasig.cas.authentication.principal.Service;
 import org.jasig.cas.services.RegisteredServiceUsernameAttributeProvider;

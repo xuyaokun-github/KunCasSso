@@ -1,4 +1,4 @@
-package com.kunghsu.config;
+package com.sso.server.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;

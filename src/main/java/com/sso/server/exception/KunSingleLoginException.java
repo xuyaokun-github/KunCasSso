@@ -1,7 +1,7 @@
 package com.sso.server.exception;
 
 
-import com.kunghsu.vo.SsoLoginResultVo;
+import com.sso.server.vo.SsoLoginResultVo;
 
 import java.security.GeneralSecurityException;
 

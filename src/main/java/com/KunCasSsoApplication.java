@@ -1,7 +1,7 @@
 package com;
 
-import com.kunghsu.base.listener.SystemStartUpListener;
-import com.kunghsu.vo.SessionFilter;
+import com.sso.server.listener.SystemStartUpListener;
+import com.sso.server.filter.SessionFilter;
 import org.jasig.cas.CasEnvironmentContextListener;
 import org.jasig.inspektr.common.web.ClientInfoThreadLocalFilter;
 import org.springframework.boot.SpringApplication;

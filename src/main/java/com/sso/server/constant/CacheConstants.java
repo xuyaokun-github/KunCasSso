@@ -1,4 +1,4 @@
-package com.kunghsu.base.constants;
+package com.sso.server.constant;
 
 public class CacheConstants {
 

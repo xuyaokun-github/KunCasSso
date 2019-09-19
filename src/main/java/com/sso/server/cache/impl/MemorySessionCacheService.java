@@ -1,6 +1,6 @@
-package com.kunghsu.cache.impl;
+package com.sso.server.cache.impl;
 
-import com.kunghsu.cache.ISessionCacheService;
+import com.sso.server.cache.ISessionCacheService;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;

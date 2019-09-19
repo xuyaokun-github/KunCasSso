@@ -1,9 +1,10 @@
 package com.sso.server.authencation;
 
-import com.kunghsu.vo.SessionFilter;
-import com.kunghsu.vo.SsoLoginInfoVo;
+import com.kunghsu.verify.ICredentialVerifyService;
 import com.sso.server.credential.BaseCredential;
+import com.sso.server.filter.SessionFilter;
 import com.sso.server.utils.SsoUtil;
+import com.sso.server.vo.SsoLoginInfoVo;
 import org.jasig.cas.authentication.Credential;
 import org.jasig.cas.authentication.HandlerResult;
 import org.jasig.cas.authentication.PreventedException;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.Resource;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +34,10 @@ public class SimpleUsernamePasswordAuthenticationHandler extends BaseAbstractAut
 
 	@Value("${login.single1_cipher_password}")
 	private String single1CipherPassword;
-	
+
+	@Resource
+	private ICredentialVerifyService credentialVerifyService;
+
 	@Override
 	protected HandlerResult doAuthentication(Credential credential) throws GeneralSecurityException, PreventedException {
 		BaseCredential baseCredential = (BaseCredential) credential;
@@ -45,17 +50,7 @@ public class SimpleUsernamePasswordAuthenticationHandler extends BaseAbstractAut
 		//可以根据调用登录传过来的值，做特殊处理，例如我要做app登录还是桌面软件客户端登录
         String single = baseCredential.getSingle();//例如通过single这个自定义参数来做判断
 
-		//TODO 假如失败，抛出异常结束
-
-        //登录成功，继续往下走
-		// 假如登录成功，继续往下执行
-		//封装单点登录信息，这类信息可能各个客户端都会从中取出关键业务信息
-		//可以使用自定义的对象,客户端可以把这个VO从断言对象中取出来
-		SsoLoginInfoVo ssoLoginInfoVo = new SsoLoginInfoVo();
-		ssoLoginInfoVo.setUsername(baseCredential.getUserName());
-		ssoLoginInfoVo.setPassword(baseCredential.getPassWord());
-		ssoLoginInfoVo.add("time", "" + System.currentTimeMillis());
-
+		SsoLoginInfoVo ssoLoginInfoVo = credentialVerifyService.verify(baseCredential);
 		//注意，登录成功，要创建session
 		SsoUtil.createSession(ssoSessionId, ssoLoginInfoVo, "1");
 		SessionFilter.getRequest().getSession().setAttribute(SSO_SESSION_KEY, ssoLoginInfoVo);

@@ -3,15 +3,16 @@
  */
 package com.sso.server.authencation;
 
-import com.kunghsu.vo.SessionFilter;
-import com.kunghsu.vo.SsoLoginInfoVo;
+import com.kunghsu.verify.ICredentialVerifyService;
 import com.sso.server.credential.BaseCredential;
-import com.sso.server.exception.KunLoginException;
+import com.sso.server.filter.SessionFilter;
 import com.sso.server.utils.SsoUtil;
+import com.sso.server.vo.SsoLoginInfoVo;
 import org.jasig.cas.authentication.Credential;
 import org.jasig.cas.authentication.HandlerResult;
 import org.jasig.cas.authentication.PreventedException;
 
+import javax.annotation.Resource;
 import java.security.GeneralSecurityException;
 
 import static com.sso.server.constant.SsoContant.SSO_SESSION_KEY;
@@ -25,6 +26,10 @@ import static com.sso.server.constant.SsoContant.SSO_SESSION_KEY;
  *
  */
 public class UsernamePasswordAuthencationHandler extends BaseAbstractAuthencationHandler {
+
+
+	@Resource
+	private ICredentialVerifyService credentialVerifyService;
 
 	boolean checkCaptchCode = true;//是否校验验证码
 
@@ -45,25 +50,8 @@ public class UsernamePasswordAuthencationHandler extends BaseAbstractAuthencatio
 		//拿到sessionID
 		String ssoSessionId = SessionFilter.getRequest().getSession().getId();
 
-		//开始做登录操作
-		//至于校验是否登录成功，可以查数据库或者调用用户中心来判断用户是否能登录
-
-		//假如登录不成功，可以抛出异常
-		//TODO
-		System.out.println("username:" + baseCredential.getUserName());
-		System.out.println("passWord:" + baseCredential.getPassWord());
-
-		if (!"xyk".equals(baseCredential.getUserName())){
-			throw new KunLoginException("用户不合法，请重新登录");
-		}
-
-		// 假如登录成功，继续往下执行
-		//封装单点登录信息，这类信息可能各个客户端都会从中取出关键业务信息
-		//可以使用自定义的对象,客户端可以把这个VO从断言对象中取出来
-		SsoLoginInfoVo ssoLoginInfoVo = new SsoLoginInfoVo();
-		ssoLoginInfoVo.setUsername(baseCredential.getUserName());
-		ssoLoginInfoVo.setPassword(baseCredential.getPassWord());
-		ssoLoginInfoVo.add("time", "" + System.currentTimeMillis());
+		//开始做登录验证操作
+		SsoLoginInfoVo ssoLoginInfoVo = credentialVerifyService.verify(baseCredential);
 
 		//注意，登录成功，要创建session
 		SsoUtil.createSession(ssoSessionId, ssoLoginInfoVo, "1");

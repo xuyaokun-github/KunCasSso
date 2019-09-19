@@ -2,7 +2,7 @@
 package com.sso.server.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kunghsu.vo.SsoLoginInfoVo;
+import com.sso.server.vo.SsoLoginInfoVo;
 import com.sso.server.utils.SsoUtil;
 import org.jasig.cas.authentication.principal.Service;
 import org.jasig.cas.logout.DefaultLogoutRequest;

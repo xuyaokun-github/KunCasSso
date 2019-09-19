@@ -1,7 +1,7 @@
-package com.kunghsu.cache.impl;
+package com.sso.server.cache.impl;
 
-import com.kunghsu.cache.IObjectCacheService;
-import com.kunghsu.utils.RedissonUtil;
+import com.sso.server.cache.IObjectCacheService;
+import com.sso.server.utils.RedissonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 

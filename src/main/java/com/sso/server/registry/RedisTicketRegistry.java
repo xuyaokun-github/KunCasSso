@@ -5,8 +5,8 @@
 package com.sso.server.registry;
 
 
-import com.kunghsu.cache.CustomCacheManager;
-import com.kunghsu.utils.RedissonUtil;
+import com.sso.server.cache.CustomCacheManager;
+import com.sso.server.utils.RedissonUtil;
 import org.jasig.cas.authentication.principal.Service;
 import org.jasig.cas.ticket.ServiceTicketImpl;
 import org.jasig.cas.ticket.Ticket;

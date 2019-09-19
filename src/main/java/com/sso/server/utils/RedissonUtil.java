@@ -1,4 +1,4 @@
-package com.kunghsu.utils;
+package com.sso.server.utils;
 
 import org.redisson.api.*;
 
