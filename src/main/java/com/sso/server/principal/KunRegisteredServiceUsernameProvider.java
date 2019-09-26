@@ -30,22 +30,18 @@ public class KunRegisteredServiceUsernameProvider  implements RegisteredServiceU
 	@Override
 	public String resolveUsername(Principal principal, Service service) {
 
-		// 从会话中心中取出sessionId对应的会话信息
-//		ISessionService sessionService = BondeInterfaceFactory.getInstance().getInterface(ISessionService.class);
-//		String sessionStr = sessionService.getSession(principal.getId());
-//		SessionVO sessionVo = JsonUtil.getObjectForJsonString(sessionStr, SessionVO.class);
-//		return JsonUtil.getJsonStringForJavaPOJO(sessionVo.getAttribute(SsoConstant.SSO_SESSION_KEY));
-
-
 		//原本在services/HTTPSandHTTP-10000001-Tim.json中使用的是org.jasig.cas.services.DefaultRegisteredServiceUsernameProvider
 
-		//TODO 这个方法主要就是用于从会话中心获取到session，然后把session里的单点登录vo取出来
+		/*
+			用KunRegisteredServiceUsernameProvider替代了DefaultRegisteredServiceUsernameProvider
+			DefaultRegisteredServiceUsernameProvider原本只是简单地返回了principalId
+			复写它，定制化目的在于：用于从会话中心获取到session，然后把session里的单点登录vo取出来
+			最终返回单点登录vo对应的序列化字符串
+		 */
 
+		//principalId实质就是sessionId，这个sessionId会服务于多个客户端
 		String principalId = principal.getId();
-		//根据principalId取到session信息，然后根据session取到会话中的单点登录VO
-//		String str = JSONObject.fromObject(new SsoLoginInfoVo()).toString();
-//		return str;
-
+		//根据principalId取到session对象，然后根据session取到会话中的单点登录VO
 		String sessionStr = (String) CustomCacheManager.getSessionCache(principal.getId());
 		SessionVO sessionVo = JSONObject.parseObject(sessionStr, SessionVO.class);
 		return JSONObject.toJSON(sessionVo.getAttribute(SSO_SESSION_KEY)).toString();

@@ -151,13 +151,9 @@ public class SessionWrap implements HttpSession {
         if (sessionId != null) {
 
             //之前的设计是，是由一个会话中心的应用来管理session
-            //其实，我们可以改成把session放到redis或者其他地方
-
-//            ISessionService sessionService = (ISessionService)BeanFactory.getBean(ISessionService.class);
-//            sessionService.delSession(sessionId);
-
-            //这里做的是删除session TODO
-
+            //优化：改成把session放到redis或者其他地方
+            //这里做的是删除session
+            CustomCacheManager.deleteSession(sessionId);
 
             if (this.isHttpRequest) {
                 Cookie[] cookies = this.request.getCookies();
@@ -168,6 +164,7 @@ public class SessionWrap implements HttpSession {
                     for(int i$ = 0; i$ < len$; ++i$) {
                         Cookie c = arr$[i$];
                         if (c.getName().toUpperCase().equals(this.sessionCookieName.toUpperCase())) {
+                            //设置cookie失活，相当于清cookie
                             c.setMaxAge(0);
                             this.response.addCookie(c);
                             return;
@@ -185,12 +182,7 @@ public class SessionWrap implements HttpSession {
             return null;
         } else {
 
-            //根据sessionId获取session,后面改成从redis中取session TODO
-
-//            ISessionService sessionService = (ISessionService)BeanFactory.getBean(ISessionService.class);
-//            String sessionStr = sessionService.getSession(sessionId);
-
-            //这个session,可以暂时模拟
+            //根据sessionId获取session,从redis或者内存中取session
             String sessionStr = (String) CustomCacheManager.getSessionCache(sessionId);
 
             SessionVO sessionVo = JSONObject.parseObject(sessionStr, SessionVO.class);
@@ -200,13 +192,8 @@ public class SessionWrap implements HttpSession {
 
     private void setSessionVo(SessionVO sessionVo) {
 
-        //设置session,TODO
+        //设置session
         //设计session存储位置，按照设计的思路存即可
-
-//        ISessionService sessionService = (ISessionService)BeanFactory.getBean(ISessionService.class);
-//        sessionService.setSession(JsonUtil.toJSONString(sessionVo));
-
-        //模拟
         CustomCacheManager.setSessionCache(this.getSessionId(), JSONObject.toJSONString(sessionVo));
 
 
