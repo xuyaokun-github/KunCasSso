@@ -6,6 +6,7 @@ package com.sso.server.authencation;
 import com.kunghsu.verify.ICredentialVerifyService;
 import com.sso.server.credential.BaseCredential;
 import com.sso.server.filter.SessionFilter;
+import com.sso.server.service.ILoginControlService;
 import com.sso.server.utils.SsoUtil;
 import com.sso.server.vo.SsoLoginInfoVo;
 import org.jasig.cas.authentication.Credential;
@@ -31,6 +32,9 @@ public class UsernamePasswordAuthencationHandler extends BaseAbstractAuthencatio
 	@Resource
 	private ICredentialVerifyService credentialVerifyService;
 
+	@Resource
+	private ILoginControlService loginControlService;
+
 	boolean checkCaptchCode = true;//是否校验验证码
 
 	public void setCheckCaptchCode(boolean checkCaptchCode) {
@@ -50,8 +54,12 @@ public class UsernamePasswordAuthencationHandler extends BaseAbstractAuthencatio
 		//拿到sessionID
 		String ssoSessionId = SessionFilter.getRequest().getSession().getId();
 
+
 		//开始做登录验证操作
 		SsoLoginInfoVo ssoLoginInfoVo = credentialVerifyService.verify(baseCredential);
+
+		//验证完做登录人数控制
+		loginControlService.loginControl(ssoLoginInfoVo.getUsername(), ssoSessionId);
 
 		//注意，登录成功，要创建session
 		SsoUtil.createSession(ssoSessionId, ssoLoginInfoVo, "1");

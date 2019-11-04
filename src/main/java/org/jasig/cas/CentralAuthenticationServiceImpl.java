@@ -1,39 +1,19 @@
 package org.jasig.cas;
 
+import com.alibaba.fastjson.JSONObject;
 import com.codahale.metrics.annotation.Counted;
 import com.codahale.metrics.annotation.Metered;
 import com.codahale.metrics.annotation.Timed;
-import org.jasig.cas.authentication.Authentication;
-import org.jasig.cas.authentication.AuthenticationBuilder;
-import org.jasig.cas.authentication.AuthenticationContext;
-import org.jasig.cas.authentication.AuthenticationException;
-import org.jasig.cas.authentication.DefaultAuthenticationBuilder;
-import org.jasig.cas.authentication.MixedPrincipalException;
+import com.sso.server.cache.CustomCacheManager;
+import com.sso.server.vo.SessionVO;
+import org.jasig.cas.authentication.*;
 import org.jasig.cas.authentication.principal.Principal;
 import org.jasig.cas.authentication.principal.Service;
 import org.jasig.cas.logout.LogoutManager;
 import org.jasig.cas.logout.LogoutRequest;
-import org.jasig.cas.services.RegisteredService;
-import org.jasig.cas.services.RegisteredServiceAttributeReleasePolicy;
-import org.jasig.cas.services.ServiceContext;
-import org.jasig.cas.services.ServicesManager;
-import org.jasig.cas.services.UnauthorizedProxyingException;
-import org.jasig.cas.services.UnauthorizedServiceForPrincipalException;
-import org.jasig.cas.services.UnauthorizedSsoServiceException;
-import org.jasig.cas.support.events.CasProxyGrantingTicketCreatedEvent;
-import org.jasig.cas.support.events.CasProxyTicketGrantedEvent;
-import org.jasig.cas.support.events.CasServiceTicketGrantedEvent;
-import org.jasig.cas.support.events.CasServiceTicketValidatedEvent;
-import org.jasig.cas.support.events.CasTicketGrantingTicketCreatedEvent;
-import org.jasig.cas.support.events.CasTicketGrantingTicketDestroyedEvent;
-import org.jasig.cas.ticket.AbstractTicketException;
-import org.jasig.cas.ticket.InvalidTicketException;
-import org.jasig.cas.ticket.ServiceTicket;
-import org.jasig.cas.ticket.ServiceTicketFactory;
-import org.jasig.cas.ticket.TicketFactory;
-import org.jasig.cas.ticket.TicketGrantingTicket;
-import org.jasig.cas.ticket.TicketGrantingTicketFactory;
-import org.jasig.cas.ticket.UnrecognizableServiceForServiceTicketValidationException;
+import org.jasig.cas.services.*;
+import org.jasig.cas.support.events.*;
+import org.jasig.cas.ticket.*;
 import org.jasig.cas.ticket.proxy.ProxyGrantingTicket;
 import org.jasig.cas.ticket.proxy.ProxyGrantingTicketFactory;
 import org.jasig.cas.ticket.proxy.ProxyTicket;
@@ -44,7 +24,6 @@ import org.jasig.cas.validation.ImmutableAssertion;
 import org.jasig.inspektr.audit.annotation.Audit;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -347,6 +326,13 @@ public class CentralAuthenticationServiceImpl extends AbstractCentralAuthenticat
             final Principal modifiedPrincipal = this.principalFactory.createPrincipal(principalId, attributesToRelease);
             final AuthenticationBuilder builder = DefaultAuthenticationBuilder.newInstance(authentication);
             builder.setPrincipal(modifiedPrincipal);
+
+            //add by xyk on 2019年11月4日22点19分
+            //建立sessionId与TGT的对应关系--principal.getId()就是sessionId
+            String sessionStr = CustomCacheManager.getSessionCache(principal.getId());
+            SessionVO sessionVo = JSONObject.parseObject(sessionStr, SessionVO.class);
+            sessionVo.setTgtId(root.getId());
+            CustomCacheManager.setSessionCache(principal.getId(), sessionVo.toJson());
 
             final Assertion assertion = new ImmutableAssertion(
                     builder.build(),

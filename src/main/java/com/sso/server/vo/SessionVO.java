@@ -8,12 +8,14 @@ import java.util.Map;
 import java.util.UUID;
 
 public class SessionVO implements Serializable {
+
     private Map<String, String> attributes = new HashMap();
     private Map<String, String> attributesType = new HashMap();
     private long createTime = 0L;
     private String id = null;
     private int maxInactiveInterval = 1800;
     private volatile boolean isNew = false;
+    private String tgtId;//TGT (方便用于做登录控制等)
 
     public String toJson() {
         return JSONObject.toJSONString(this);
@@ -104,6 +106,14 @@ public class SessionVO implements Serializable {
 
     public void setNew(boolean isNew) {
         this.isNew = isNew;
+    }
+
+    public String getTgtId() {
+        return tgtId;
+    }
+
+    public void setTgtId(String tgtId) {
+        this.tgtId = tgtId;
     }
 }
 

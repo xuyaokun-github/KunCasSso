@@ -121,6 +121,30 @@ public class RedissonUtil {
         return isExpireSuccess;
     }
 
+
+    /**
+     * 获取双端队列
+     *
+     * @param objectName
+     * @return
+     */
+    public static <V> RDeque<V> getRDeque(String objectName) {
+        RDeque<V> rDeque = redissonClient.getDeque(objectName);
+        return rDeque;
+    }
+
+    /**
+     * 获取锁
+     *
+     * @param objectName
+     * @return
+     */
+    public static RLock getRLock(String objectName) {
+        RLock rLock = redissonClient.getLock(objectName);
+        return rLock;
+    }
+
+
     /** ================================下面部分还没做封装优化工作==========================================*/
 
     /**
@@ -129,7 +153,7 @@ public class RedissonUtil {
      * @param objectName
      * @return
      */
-    public static <K, V> RMap<K, V> getRMap(RedissonClient redissonClient, String objectName) {
+    public static <K, V> RMap<K, V> getRMap(String objectName) {
         RMap<K, V> map = redissonClient.getMap(objectName);
         return map;
     }
@@ -140,7 +164,7 @@ public class RedissonUtil {
      * @param objectName
      * @return
      */
-    public static <V> RSortedSet<V> getRSortedSet(RedissonClient redissonClient, String objectName) {
+    public static <V> RSortedSet<V> getRSortedSet(String objectName) {
         RSortedSet<V> sortedSet = redissonClient.getSortedSet(objectName);
         return sortedSet;
     }
@@ -151,7 +175,7 @@ public class RedissonUtil {
      * @param objectName
      * @return
      */
-    public static <V> RSet<V> getRSet(RedissonClient redissonClient, String objectName) {
+    public static <V> RSet<V> getRSet(String objectName) {
         RSet<V> rSet = redissonClient.getSet(objectName);
         return rSet;
     }
@@ -173,45 +197,11 @@ public class RedissonUtil {
      * @param objectName
      * @return
      */
-    public static <V> RQueue<V> getRQueue(RedissonClient redissonClient, String objectName) {
+    public static <V> RQueue<V> getRQueue(String objectName) {
         RQueue<V> rQueue = redissonClient.getQueue(objectName);
         return rQueue;
     }
 
-    /**
-     * 获取双端队列
-     *
-     * @param objectName
-     * @return
-     */
-    public static <V> RDeque<V> getRDeque(RedissonClient redissonClient, String objectName) {
-        RDeque<V> rDeque = redissonClient.getDeque(objectName);
-        return rDeque;
-    }
-
-    /**
-     * 此方法不可用在Redisson 1.2 中 在1.2.2版本中 可用
-     *
-     * @param redisson
-     * @param objectName
-     * @return
-     */
-    /**
-     * public <V> RBlockingQueue<V> getRBlockingQueue(Redisson redisson,String
-     * objectName){ RBlockingQueue rb=redisson.getBlockingQueue(objectName);
-     * return rb; }
-     */
-
-    /**
-     * 获取锁
-     *
-     * @param objectName
-     * @return
-     */
-    public static RLock getRLock(RedissonClient redissonClient, String objectName) {
-        RLock rLock = redissonClient.getLock(objectName);
-        return rLock;
-    }
 
     /**
      * 获取原子数
@@ -219,7 +209,7 @@ public class RedissonUtil {
      * @param objectName
      * @return
      */
-    public static RAtomicLong getRAtomicLong(RedissonClient redissonClient, String objectName) {
+    public static RAtomicLong getRAtomicLong(String objectName) {
         RAtomicLong rAtomicLong = redissonClient.getAtomicLong(objectName);
         return rAtomicLong;
     }
@@ -230,7 +220,7 @@ public class RedissonUtil {
      * @param objectName
      * @return
      */
-    public static RCountDownLatch getRCountDownLatch(RedissonClient redissonClient, String objectName) {
+    public static RCountDownLatch getRCountDownLatch(String objectName) {
         RCountDownLatch rCountDownLatch = redissonClient.getCountDownLatch(objectName);
         return rCountDownLatch;
     }
@@ -241,7 +231,7 @@ public class RedissonUtil {
      * @param objectName
      * @return
      */
-    public static <M> RTopic<M> getRTopic(RedissonClient redissonClient, String objectName) {
+    public static <M> RTopic<M> getRTopic(String objectName) {
         RTopic<M> rTopic = redissonClient.getTopic(objectName);
         return rTopic;
     }
